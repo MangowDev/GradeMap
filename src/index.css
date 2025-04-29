@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-sansation: 'Sansation', 'sans-serif';
+    --font-rubik: 'Rubik', 'sans-serif';
+    --font-josefin: 'Josefin Sans', 'sans-serif';
+    --color-primary: #ffb200;
+    --color-secondary: #24294f;
+    --color-tertiary: #ffc533;
+    --color-cuaternary: #3b4166;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #ffb200 inset;
+    -webkit-text-fill-color: #24294f;
+    font-family: 'Rubik', sans-serif;
+  }
+  
