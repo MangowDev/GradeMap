@@ -8,10 +8,22 @@
     --font-rubik: 'Rubik', 'sans-serif';
     --font-josefin: 'Josefin Sans', 'sans-serif';
     --color-primary: #ffb200;
-    --color-secondary: #24294f;
+    --color-secondary: #1d2142;
     --color-tertiary: #ffc533;
-    --color-cuaternary: #3b4166;
+    --color-cuaternary: #363e76;
+    --color-details: #4652a0;
 }
+
+/* @theme {
+  --font-sansation: 'Sansation', 'sans-serif';
+  --font-rubik: 'Rubik', 'sans-serif';
+  --font-josefin: 'Josefin Sans', 'sans-serif';
+  --color-primary: #ffb200;
+  --color-secondary: #24294f;
+  --color-tertiary: #ffc533;
+  --color-cuaternary: #3b4166;
+}
+ */
 
 html, body {
     height: 100%;

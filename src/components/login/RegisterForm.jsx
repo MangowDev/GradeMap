@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../utils/login/loginApi";
 
 export default function RegisterForm() {
@@ -15,6 +15,7 @@ export default function RegisterForm() {
 
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +29,8 @@ export default function RegisterForm() {
 
     try {
       const result = await registerUser(formData);
-      console.log("Registration successful:", result);
+      console.log("Registration succesful: ", result);
+      navigate("/home");
     } catch (err) {
       setError("There was an error registering: ", err);
     } finally {
@@ -183,7 +185,11 @@ export default function RegisterForm() {
           {isSubmitting ? "Submitting..." : "Register"}
         </button>
 
-        {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+        {error && (
+          <p className="text-red-600 mt-5 font-rubik text-lg text-center">
+            {error}
+          </p>
+        )}
 
         <p className="mt-4 sm:mt-5 text-black text-base sm:text-xl font-rubik italic text-center">
           Already registered?{" "}

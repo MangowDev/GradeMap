@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { loginUser } from "../../utils/login/loginApi"; // Asegúrate de tener esta función correctamente configurada
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../utils/login/loginApi";
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -10,6 +10,15 @@ export default function LoginForm() {
 
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token");
+    if (token) {
+      navigate('/home');
+    }
+  }, [navigate]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +33,9 @@ export default function LoginForm() {
     try {
       const result = await loginUser(formData);
       console.log("Login successful:", result);
+      localStorage.setItem("user_id", result.user.id);
       localStorage.setItem("auth_token", result.token);
+      navigate('/home');
     } catch (err) {
       setError("There was an error logging in: ", err);
     } finally {
@@ -83,11 +94,10 @@ export default function LoginForm() {
           disabled={isSubmitting}
           className="w-full bg-secondary font-sansation font-semibold text-primary text-2xl sm:text-3xl py-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-cuaternary hover:text-tertiary"
         >
-          {isSubmitting ? "Submitting..." : "Log In"}
+          {isSubmitting ? "Login in..." : "Log In"}
         </button>
 
-        {error && <p className="text-red-500 text-center">{error}</p>}
-
+        {error && <p className="text-red-600 mt-5 font-rubik text-lg text-center">{error}</p>}
 
         <p className="mt-4 sm:mt-5 text-black text-base sm:text-xl font-rubik italic text-center">
           Don't have an account?{" "}
