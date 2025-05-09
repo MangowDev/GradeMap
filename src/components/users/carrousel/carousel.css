@@ -1,0 +1,18 @@
+@keyframes scroll-x {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .scroll-x {
+    animation: scroll-x 40s linear infinite;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .scroll-x:hover {
+    animation-play-state: paused;
+  }
