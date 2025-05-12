@@ -31,7 +31,7 @@ export default function UsersCard({ user, classroomCache }) {
         />
         <div className="flex flex-col items-center space-y-2 justify-center py-2">
           <h3
-            className="text-xl text-center text-tertiary"
+            className="text-xl text-center font-sansation text-primary"
             style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
           >
             {user.name} {user.surnames}

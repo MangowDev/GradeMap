@@ -3,3 +3,5 @@
 -Hacer que el tamaño de las barras del logo del login sean porcentuales
 
 -Arreglar colores del login al hacer zoom en el navegador
+
+-Hacer que el mensaje exitoso de create user se vea despues de recargar la pagina

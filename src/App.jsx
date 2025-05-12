@@ -9,6 +9,9 @@ import Register from "./views/Register";
 import Home from "./views/Home";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Users from "./views/Users";
+import UserDetail from "./components/users/UserDetail";
+import CreateUser from "./views/CreateUser";
+import EditUser from "./views/EditUser";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -33,6 +36,33 @@ function App() {
           element={
             <PrivateRoute>
               <Users />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/users/create"
+          element={
+            <PrivateRoute>
+              <CreateUser />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/:id"
+          element={
+            <PrivateRoute>
+              <UserDetail />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditUser />
             </PrivateRoute>
           }
         />

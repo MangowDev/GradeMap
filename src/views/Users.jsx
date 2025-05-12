@@ -8,6 +8,7 @@ import {
 import { UsersCarousel } from "../components/users/carrousel/UsersCarousel";
 import "../components/users/carrousel/carousel.css";
 import Table from "../components/shared/Table.jsx";
+import CreateNewButton from "../components/shared/CreateNewButton.jsx";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -93,11 +94,14 @@ export default function Users() {
             </div>
             <div className="my-5">
               {isLoading ? (
-                <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center"><span>Loading...</span></div>
+                <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+                  <span>Loading...</span>
+                </div>
               ) : (
                 <Table data={usersWithClassrooms} columns={columns} />
               )}{" "}
             </div>
+              <CreateNewButton url="create"/>
           </div>
         </div>
       </main>

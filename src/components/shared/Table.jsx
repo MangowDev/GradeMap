@@ -5,12 +5,45 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
+import { FaArrowAltCircleUp, FaArrowAltCircleDown, FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Table({ data, columns: columnsProp }) {
   const [sorting, setSorting] = useState([]);
 
-  const columns = useMemo(() => columnsProp, [columnsProp]);
+  const columns = useMemo(
+    () => [
+      ...columnsProp,
+      {
+        header: "Acciones",
+        id: "actions",
+        cell: ({ row }) => (
+          <div className="flex gap-3 flex-row items-center text-white text-lg">
+            <FaEye
+              className="cursor-pointer hover:text-tertiary transition"
+              size={21}
+              title="Ver"
+              onClick={() => console.log("Ver", row.original)}
+            />
+            <Link to={`/user/edit/${row.original.id}`}>
+              <FaEdit
+                className="cursor-pointer hover:text-yellow-400 transition"
+                size={21}
+                title="Editar"
+              />
+            </Link>
+            <FaTrash
+              className="cursor-pointer hover:text-red-500 transition"
+              size={21}
+              title="Eliminar"
+              onClick={() => console.log("Eliminar", row.original)}
+            />
+          </div>
+        ),
+      },
+    ],
+    [columnsProp]
+  );
 
   const table = useReactTable({
     data,
@@ -47,10 +80,13 @@ export default function Table({ data, columns: columnsProp }) {
                         header.getContext()
                       )}
                     </span>
-                    {{
-                      asc: <FaArrowAltCircleUp />,
-                      desc: <FaArrowAltCircleDown />,
-                    }[header.column.getIsSorted()] ?? ""}
+                    {header.column.getIsSorted() ? (
+                      header.column.getIsSorted() === "asc" ? (
+                        <FaArrowAltCircleUp />
+                      ) : (
+                        <FaArrowAltCircleDown />
+                      )
+                    ) : null}
                   </div>
                 </th>
               ))}
