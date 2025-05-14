@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import placeholderUser from "../../../assets/placeholder-images/profilepicture.png";
 import { createUser } from "../../../utils/users/usersApi.js";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateUserForm() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ export default function CreateUserForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,8 +78,10 @@ export default function CreateUserForm() {
       const response = await createUser(payload);
       console.log("Usuario creado:", response);
       setFormData({});
-      setSuccessMessage("¡Usuario creado con éxito!");
-      window.location.reload();
+      setSuccessMessage("¡Usuario creado con éxito! Redirigiendo...");
+      setTimeout(() => {
+        navigate("/users");
+      }, 1500);
     } catch (error) {
       console.error("Error al crear el usuario:", error);
       setError("Hubo un problema al crear el usuario. Intenta nuevamente.");

@@ -12,6 +12,7 @@ import Users from "./views/Users";
 import UserDetail from "./components/users/UserDetail";
 import CreateUser from "./views/CreateUser";
 import EditUser from "./views/EditUser";
+import Computers from "./views/Computers";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -63,6 +64,15 @@ function App() {
           element={
             <PrivateRoute>
               <EditUser />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/computers"
+          element={
+            <PrivateRoute>
+              <Computers />
             </PrivateRoute>
           }
         />

@@ -7,24 +7,33 @@ import { getUserById } from "../utils/users/usersApi";
 
 export default function EditUser() {
   const [user, setUser] = useState(null);
-
   const { id } = useParams();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await getUserById(id);
-        setUser(response.data);
+        console.log(response);
+        setUser(response);
       } catch (error) {
         console.error("Error al obtener el usuario:", error);
       }
     };
-
     fetchUserData();
   }, [id]);
 
   if (!user) {
-    return <div>Cargando...</div>;
+    return (
+      <div className="min-h-screen flex flex-col bg-secondary">
+        <Navbar />
+        <main className="flex-grow">
+          <div className="flex flex-row text-4xl text-details2 justify-center items-center py-50 font-sansation">
+            <h1>Cargando...</h1>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   return (

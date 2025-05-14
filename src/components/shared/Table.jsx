@@ -5,11 +5,20 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { FaArrowAltCircleUp, FaArrowAltCircleDown, FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import {
+  FaArrowAltCircleUp,
+  FaArrowAltCircleDown,
+  FaEye,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { DeleteModal } from "./DeleteModal";
 
-export default function Table({ data, columns: columnsProp }) {
+export default function Table({ data, columns: columnsProp, onDeleteItem }) {
   const [sorting, setSorting] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const columns = useMemo(
     () => [
@@ -36,7 +45,7 @@ export default function Table({ data, columns: columnsProp }) {
               className="cursor-pointer hover:text-red-500 transition"
               size={21}
               title="Eliminar"
-              onClick={() => console.log("Eliminar", row.original)}
+              onClick={() => openDeleteModal(row.original)}
             />
           </div>
         ),
@@ -44,6 +53,25 @@ export default function Table({ data, columns: columnsProp }) {
     ],
     [columnsProp]
   );
+
+  const openDeleteModal = (item) => {
+    setItemToDelete(item);
+    setIsModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsModalOpen(false);
+    setItemToDelete(null);
+  };
+
+  const handleDelete = (id) => {
+    onDeleteItem(id);
+    closeDeleteModal();
+  };
+
+  const handleDeleteSuccess = () => {
+    window.location.reload();
+  };
 
   const table = useReactTable({
     data,
@@ -100,8 +128,8 @@ export default function Table({ data, columns: columnsProp }) {
               style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.8)" }}
               className={`${
                 index % 2 === 0
-                  ? "bg-lightblue text-white text-lg"
-                  : "bg-lightblue2 text-white text-lg"
+                  ? "bg-lightblue2 text-white text-lg"
+                  : "bg-lightblue text-white text-lg"
               }`}
             >
               {row.getVisibleCells().map((cell) => (
@@ -113,6 +141,14 @@ export default function Table({ data, columns: columnsProp }) {
           ))}
         </tbody>
       </table>
+
+      <DeleteModal
+        isOpen={isModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={handleDelete}
+        onSuccess={handleDeleteSuccess}
+        item={itemToDelete}
+      />
     </div>
   );
 }

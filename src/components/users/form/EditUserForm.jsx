@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 import placeholderUser from "../../../assets/placeholder-images/profilepicture.png";
 import { updateUser } from "../../../utils/users/usersApi";
+import { useNavigate } from "react-router-dom";
 
 export default function EditUserForm({ user }) {
-  const [formData, setFormData] = useState({
+  const initialData = {
     name: user.name,
     surnames: user.surnames,
     username: user.username,
     dni: user.dni,
-    password: "",
-    confirmPassword: "",
     email: user.email,
     role: user.role,
     computer_id: user.computer_id || "",
+  };
+
+  const [formData, setFormData] = useState({
+    ...initialData,
+    password: "",
+    confirmPassword: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,32 +34,37 @@ export default function EditUserForm({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password && formData.password !== formData.confirmPassword) {
       setError("Las contraseñas no coinciden.");
-      return;
-    } else if (!formData.username) {
-      setError("El campo Username es obligatorio.");
-      return;
-    } else if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
-      setError("Por favor, ingresa un correo electrónico válido.");
-      return;
-    } else if (!formData.dni || formData.dni.length !== 9) {
-      setError("El DNI debe tener 9 caracteres.");
-      return;
-    } else if (!formData.name) {
-      setError("El campo Nombre es obligatorio.");
-      return;
-    } else if (!formData.surnames) {
-      setError("El campo Apellidos es obligatorio.");
-      return;
-    } else if (!formData.role) {
-      setError("El campo Rol es obligatorio.");
       return;
     }
 
-    const payload = { ...formData };
-    if (!payload.password) delete payload.password;
-    if (!payload.confirmPassword) delete payload.confirmPassword;
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+      setError("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+
+    if (formData.dni && formData.dni.length !== 9) {
+      setError("El DNI debe tener 9 caracteres.");
+      return;
+    }
+
+    const payload = {};
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key];
+
+      if (key === "confirmPassword") return;
+
+      const isOptional = key === "password" || key === "computer_id";
+      const hasChanged = value !== initialData[key];
+
+      if (isOptional && !value) return;
+      if (!isOptional && !hasChanged) return;
+
+      payload[key] = value;
+    });
+
+    delete payload.confirmPassword;
 
     setIsLoading(true);
     setError(null);
@@ -61,7 +73,10 @@ export default function EditUserForm({ user }) {
     try {
       const response = await updateUser(user.id, payload);
       console.log("Usuario editado:", response);
-      setSuccessMessage("¡Usuario editado con éxito!");
+      setSuccessMessage("¡Usuario editado con éxito! Redirigiendo...");
+      setTimeout(() => {
+        navigate("/users");
+      }, 1500);
     } catch (error) {
       console.error("Error al editar el usuario:", error);
       setError("Hubo un problema al editar el usuario. Intenta nuevamente.");
