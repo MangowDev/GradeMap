@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { deleteUser } from "../../utils/users/usersApi";
 
-export function DeleteModal({ isOpen, onClose, item, onSuccess }) {
+export function DeleteModal({ isOpen, onClose, item, onSuccess, onConfirm }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -11,13 +10,14 @@ export function DeleteModal({ isOpen, onClose, item, onSuccess }) {
     setLoading(true);
     setError("");
     try {
-      await deleteUser(item.id);
+      await onConfirm(item.id);
       setLoading(false);
       if (onSuccess) onSuccess(item.id);
       onClose();
     } catch (err) {
       setLoading(false);
-      setError("Hubo un error al eliminar el usuario: ", err);
+      setError("Hubo un error al eliminar el elemento.");
+      console.error(err);
     }
   };
 
@@ -38,7 +38,7 @@ export function DeleteModal({ isOpen, onClose, item, onSuccess }) {
         </p>
         <div className="mb-6 text-xl text-center">
           <strong>
-            {item.name || "Campo"} ({item.id})
+            {item?.name || "Campo"} ({item?.id})
           </strong>
         </div>
 

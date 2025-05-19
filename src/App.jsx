@@ -13,6 +13,15 @@ import UserDetail from "./components/users/UserDetail";
 import CreateUser from "./views/CreateUser";
 import EditUser from "./views/EditUser";
 import Computers from "./views/Computers";
+import CreateComputer from "./views/CreateComputer";
+import EditComputer from "./views/EditComputer";
+import Boards from "./views/Tables";
+import CreateTable from "./views/CreateTable";
+import EditTable from "./views/EditTable";
+import Subjects from "./views/Subjects";
+import Tables from "./views/Tables";
+import CreateSubject from "./views/CreateSubject";
+import EditSubject from "./views/EditSubject";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -42,10 +51,64 @@ function App() {
         />
 
         <Route
+          path="/computers"
+          element={
+            <PrivateRoute>
+              <Computers />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/tables"
+          element={
+            <PrivateRoute>
+              <Tables />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/subjects"
+          element={
+            <PrivateRoute>
+              <Subjects />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
           path="/users/create"
           element={
             <PrivateRoute>
               <CreateUser />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/computers/create"
+          element={
+            <PrivateRoute>
+              <CreateComputer />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/tables/create"
+          element={
+            <PrivateRoute>
+              <CreateTable />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/subjects/create"
+          element={
+            <PrivateRoute>
+              <CreateSubject />
             </PrivateRoute>
           }
         />
@@ -69,10 +132,28 @@ function App() {
         />
 
         <Route
-          path="/computers"
+          path="/computer/edit/:id"
           element={
             <PrivateRoute>
-              <Computers />
+              <EditComputer />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/table/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditTable />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/subjects/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditSubject />
             </PrivateRoute>
           }
         />

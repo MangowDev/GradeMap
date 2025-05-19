@@ -1,48 +1,53 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/bars/Navbar/Navbar";
-import Footer from "../components/bars/footer/Footer";
+import Navbar from "../components/bars/Navbar/Navbar.jsx";
+import Footer from "../components/bars/footer/Footer.jsx";
 import Table from "../components/shared/Table.jsx";
-import { fetchComputersWithDetails } from "../utils/computers/computersApi.js";
 import CreateNewButton from "../components/shared/CreateNewButton.jsx";
-import { deleteComputer } from "../utils/computers/computersApi.js";
+import {
+  fetchBoardsWithDetails,
+  deleteBoard,
+} from "../utils/boards/boardsApi.js";
 
-export default function Computers() {
-  const [computers, setComputers] = useState([]);
+export default function Tables() {
+  const [boards, setBoards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getComputers = async () => {
+    const getBoards = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        const data = await fetchComputersWithDetails();
+        const data = await fetchBoardsWithDetails();
 
-        const formatted = data.map((computer) => ({
-          id: computer.id,
-          board: computer.board?.id || "Sin placa",
-          classroom: computer.board?.classroom?.name || "Sin clase",
-          user: computer.user?.name || "Sin usuario",
+        console.log(data);
+
+        const formatted = data.map((board) => ({
+          id: board.id,
+          classroom: board.classroom?.name || "Sin aula",
+          computer:
+            board.computers?.length > 0
+              ? board.computers.map((c) => c.id).join(", ")
+              : "Sin ordenadores",
         }));
 
-        setComputers(formatted);
+        setBoards(formatted);
       } catch (err) {
         console.error("Error:", err);
-        setError("Error al cargar ordenadores.");
+        setError("Error al cargar las mesas.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    getComputers();
+    getBoards();
   }, []);
 
   const columns = [
     { header: "ID", accessorKey: "id" },
-    { header: "Mesa", accessorKey: "board" },
     { header: "Aula", accessorKey: "classroom" },
-    { header: "Usuario asignado", accessorKey: "user" },
+    { header: "Ordenadores asignados", accessorKey: "computer" },
   ];
 
   return (
@@ -50,7 +55,7 @@ export default function Computers() {
       <Navbar />
       <main className="flex-grow px-8 py-12">
         <div className="w-full flex flex-col font-sansation space-y-5 text-details2 text-5xl font-bold">
-          <h1>Página de ordenadores</h1>
+          <h1>Página de mesas</h1>
           <div className="w-full h-1.5 bg-cuaternary border-1 rounded-lg border-details"></div>
         </div>
 
@@ -63,10 +68,10 @@ export default function Computers() {
         <div className="mt-6 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
           <div className="flex flex-col w-full justify-center items-center space-y-5">
             <h2 className="text-4xl text-white font-sansation">
-              Tabla de ordenadores
+              Tabla de mesas
             </h2>
             <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
-          </div>{" "}
+          </div>
           <div className="my-5">
             {isLoading ? (
               <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
@@ -74,12 +79,12 @@ export default function Computers() {
               </div>
             ) : (
               <Table
-                data={computers}
+                data={boards}
                 columns={columns}
-                url={"computer"}
-                onDeleteItem={deleteComputer}
+                url={"table"}
+                onDeleteItem={deleteBoard}
               />
-            )}{" "}
+            )}
           </div>
           <CreateNewButton url="create" />
         </div>

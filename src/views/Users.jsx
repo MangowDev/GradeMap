@@ -8,6 +8,7 @@ import {
 import { UsersCarousel } from "../components/users/carrousel/UsersCarousel";
 import "../components/users/carrousel/carousel.css";
 import Table from "../components/shared/Table.jsx";
+import { deleteUser } from "../utils/users/usersApi.js";
 import CreateNewButton from "../components/shared/CreateNewButton.jsx";
 
 export default function Users() {
@@ -95,13 +96,18 @@ export default function Users() {
             <div className="my-5">
               {isLoading ? (
                 <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
-                  <span>Loading...</span>
+                  <span>Cargando...</span>
                 </div>
               ) : (
-                <Table data={usersWithClassrooms} columns={columns} />
+                <Table
+                  data={usersWithClassrooms}
+                  columns={columns}
+                  url={"user"}
+                  onDeleteItem={deleteUser}
+                />
               )}{" "}
             </div>
-              <CreateNewButton url="create"/>
+            <CreateNewButton url="create" />
           </div>
         </div>
       </main>

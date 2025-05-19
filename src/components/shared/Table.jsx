@@ -15,7 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import { DeleteModal } from "./DeleteModal";
 
-export default function Table({ data, columns: columnsProp, onDeleteItem }) {
+export default function Table({ data, columns: columnsProp, onDeleteItem, url }) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -34,7 +34,7 @@ export default function Table({ data, columns: columnsProp, onDeleteItem }) {
               title="Ver"
               onClick={() => console.log("Ver", row.original)}
             />
-            <Link to={`/user/edit/${row.original.id}`}>
+            <Link to={`/${url}/edit/${row.original.id}`}>
               <FaEdit
                 className="cursor-pointer hover:text-yellow-400 transition"
                 size={21}
@@ -64,8 +64,8 @@ export default function Table({ data, columns: columnsProp, onDeleteItem }) {
     setItemToDelete(null);
   };
 
-  const handleDelete = (id) => {
-    onDeleteItem(id);
+  const handleDelete = async (id) => {
+    await onDeleteItem(id);
     closeDeleteModal();
   };
 

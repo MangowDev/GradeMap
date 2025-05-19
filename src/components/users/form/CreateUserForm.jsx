@@ -70,6 +70,10 @@ export default function CreateUserForm() {
     const payload = { ...formData };
     delete payload.confirmPassword;
 
+    if (!payload.computer_id) {
+      payload.computer_id = null;
+    }
+
     setIsLoading(true);
     setError(null);
     setSuccessMessage(null);

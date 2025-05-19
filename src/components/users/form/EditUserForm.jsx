@@ -51,20 +51,28 @@ export default function EditUserForm({ user }) {
 
     const payload = {};
     Object.keys(formData).forEach((key) => {
-      const value = formData[key];
-
       if (key === "confirmPassword") return;
 
-      const isOptional = key === "password" || key === "computer_id";
-      const hasChanged = value !== initialData[key];
+      const value = formData[key];
+      const original = initialData[key];
 
-      if (isOptional && !value) return;
-      if (!isOptional && !hasChanged) return;
+      if (key === "password") {
+        if (value) payload[key] = value;
+        return;
+      }
 
-      payload[key] = value;
+      if (key === "computer_id") {
+        const val = value === "" ? null : value;
+        if (val !== (original === "" ? null : original)) {
+          payload[key] = val;
+        }
+        return;
+      }
+
+      if (value !== original) {
+        payload[key] = value;
+      }
     });
-
-    delete payload.confirmPassword;
 
     setIsLoading(true);
     setError(null);
@@ -109,11 +117,28 @@ export default function EditUserForm({ user }) {
           <input
             name="computer_id"
             type="number"
-            value={formData.computer_id}
-            onChange={handleChange}
+            value={formData.computer_id === null ? "" : formData.computer_id}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData((prev) => ({
+                ...prev,
+                computer_id: value === "" ? "" : Number(value),
+              }));
+            }}
             className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-cuaternary focus:ring-cuaternary hover:pl-3 transition-all duration-200"
             placeholder="Opcional"
           />
+          {formData.computer_id !== null && (
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, computer_id: null }))
+              }
+              className="mt-2 text-md text-red-500 hover:underline hover:cursor-pointer"
+            >
+              Quitar ordenador
+            </button>
+          )}
         </div>
       </div>
 
