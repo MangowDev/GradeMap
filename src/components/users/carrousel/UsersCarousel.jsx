@@ -1,4 +1,5 @@
 import UsersCard from "../UsersCard";
+import "./carousel.css";
 
 export function UsersCarousel({ users, classroomCache }) { 
     return (

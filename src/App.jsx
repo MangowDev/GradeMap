@@ -15,13 +15,18 @@ import EditUser from "./views/EditUser";
 import Computers from "./views/Computers";
 import CreateComputer from "./views/CreateComputer";
 import EditComputer from "./views/EditComputer";
-import Boards from "./views/Tables";
 import CreateTable from "./views/CreateTable";
 import EditTable from "./views/EditTable";
 import Subjects from "./views/Subjects";
 import Tables from "./views/Tables";
 import CreateSubject from "./views/CreateSubject";
 import EditSubject from "./views/EditSubject";
+import Grades from "./views/Grades";
+import CreateGrade from "./views/CreateGrade";
+import EditGrade from "./views/EditGrade";
+import Classrooms from "./views/Classrooms";
+import CreateClassroom from "./views/CreateClassroom";
+import EditClassroom from "./views/EditClassroom";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -78,6 +83,24 @@ function App() {
         />
 
         <Route
+          path="/grades"
+          element={
+            <PrivateRoute>
+              <Grades />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/classrooms"
+          element={
+            <PrivateRoute>
+              <Classrooms />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
           path="/users/create"
           element={
             <PrivateRoute>
@@ -109,6 +132,24 @@ function App() {
           element={
             <PrivateRoute>
               <CreateSubject />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/grades/create"
+          element={
+            <PrivateRoute>
+              <CreateGrade />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/classrooms/create"
+          element={
+            <PrivateRoute>
+              <CreateClassroom />
             </PrivateRoute>
           }
         />
@@ -154,6 +195,24 @@ function App() {
           element={
             <PrivateRoute>
               <EditSubject />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/grade/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditGrade />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/classroom/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditClassroom />
             </PrivateRoute>
           }
         />

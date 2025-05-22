@@ -67,7 +67,7 @@ export default function Users() {
       <Navbar />
       <main className="flex-grow px-8 py-12">
         <div className="w-full flex flex-col font-sansation space-y-5 text-details2 text-5xl font-bold">
-          <h1>Users page</h1>
+          <h1>Pagina de usuarios</h1>
           <div className="w-full h-1.5 bg-cuaternary border-1 rounded-lg border-details"></div>
         </div>
 
@@ -80,7 +80,7 @@ export default function Users() {
         <div className="flex flex-col space-y-5">
           <div className="w-full flex flex-col mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
             <div className="flex flex-col w-full justify-center items-center space-y-5">
-              <h2 className="text-4xl text-white font-sansation">Last users</h2>
+              <h2 className="text-4xl text-white font-sansation">Ultimos usuarios</h2>
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
             <div className="w-full flex flex-row justify-center items-center my-5">
@@ -90,7 +90,7 @@ export default function Users() {
 
           <div className="w-full flex flex-col mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
             <div className="flex flex-col w-full justify-center items-center space-y-5">
-              <h2 className="text-4xl text-white font-sansation">User list</h2>
+              <h2 className="text-4xl text-white font-sansation">Tabla de usuarios</h2>
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
             <div className="my-5">
