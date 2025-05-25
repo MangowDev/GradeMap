@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/bars/Navbar/Navbar";
-import Footer from "../components/bars/footer/Footer";
-import { getClassroomById } from "../utils/classrooms/classroomsApi";
-import EditClassroomForm from "../components/classroom/form/EditClassroomForm";
+import Navbar from "../../components/bars/Navbar/Navbar";
+import Footer from "../../components/bars/footer/Footer";
+import { getClassroomById } from "../../utils/classrooms/classroomsApi";
+import EditClassroomForm from "../../components/classroom/form/EditClassroomForm";
 
 export default function EditClassroom() {
   const [classroom, setClassroom] = useState(null);

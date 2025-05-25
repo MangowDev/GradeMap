@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/bars/Navbar/Navbar";
-import Footer from "../components/bars/footer/Footer";
-import EditComputerForm from "../components/computers/form/EditComputerForm";
-import { getComputerById } from "../utils/computers/computersApi";
+import Navbar from "../../components/bars/Navbar/Navbar";
+import Footer from "../../components/bars/footer/Footer";
+import EditTableForm from "../../components/tables/forms/EditTableForm";
+import { getBoardById } from "../../utils/boards/boardsApi";
 
-export default function EditComputer() {
-  const [computer, setComputer] = useState(null);
+export default function EditTable() {
+  const [table, setTable] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchComputer = async () => {
+    const fetchTable = async () => {
       try {
-        const response = await getComputerById(id);
-        setComputer(response);
+        const response = await getBoardById(id);
+        setTable(response);
       } catch (error) {
-        console.error("Error al obtener el ordenador:", error);
+        console.error("Error al obtener la mesa:", error);
       }
     };
-    fetchComputer();
+
+    fetchTable();
   }, [id]);
 
-  if (!computer) {
+  if (!table) {
     return (
       <div className="min-h-screen flex flex-col bg-secondary">
         <Navbar />
@@ -37,7 +38,7 @@ export default function EditComputer() {
     <div className="min-h-screen flex flex-col bg-secondary">
       <Navbar />
       <main className="flex-grow">
-        <EditComputerForm computer={computer} />
+        <EditTableForm board={table} />
       </main>
       <Footer />
     </div>

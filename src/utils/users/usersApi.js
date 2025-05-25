@@ -152,3 +152,20 @@ export const getUserById = async (id) => {
     throw error;
   }
 };
+
+
+export const getUserGrades = async (id) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/users/${id}/grades`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user grades");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching user grades with ID ${id}:`, error);
+    throw error;
+  }
+};

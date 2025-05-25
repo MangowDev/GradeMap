@@ -11,3 +11,5 @@
 -Añadir imagen a los usuarios, y hacer que el boton de cambiar imagen del formulario funcione
 
 -Hacer que el modal delete muestre un mensaje dinamico dependiendo del tipo de dato que este borrando
+
+-Hacer que al crear o editar mesas, se le puedan asignar varios ordenadores

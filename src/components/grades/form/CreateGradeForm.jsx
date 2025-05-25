@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { createGrade } from "../../../utils/grades/gradesApi.js";
 import { fetchUsers } from "../../../utils/users/usersApi.js";
 import { fetchSubjects } from "../../../utils/subjects/subjectsApi.js";
 import gradeImg from "../../../assets/page_images/grade.png";
-import { useNavigate } from "react-router-dom";
 
 export default function CreateGradeForm() {
   const [formData, setFormData] = useState({
@@ -22,6 +22,8 @@ export default function CreateGradeForm() {
   const [successMessage, setSuccessMessage] = useState(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/grades";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +65,7 @@ export default function CreateGradeForm() {
       await createGrade(formData);
       setSuccessMessage("¡Nota creada con éxito! Redirigiendo...");
       setTimeout(() => {
-        navigate("/grades");
+        navigate(from);
       }, 1500);
     } catch (error) {
       console.error("Error al crear la nota:", error);
@@ -79,9 +81,9 @@ export default function CreateGradeForm() {
       className="flex flex-col font-rubik items-center justify-center w-full px-20 py-20"
     >
       <div className="w-full max-w-4xl space-y-8">
-      <div className="flex items-center justify-center flex-col w-full mb-10">
-        <img className="w-64 h-64" src={gradeImg} alt="computer-img" />
-      </div>
+        <div className="flex items-center justify-center flex-col w-full mb-10">
+          <img className="w-64 h-64" src={gradeImg} alt="computer-img" />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Valor de nota */}

@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/bars/Navbar/Navbar";
-import Footer from "../components/bars/footer/Footer";
-import CreateClassroomForm from "../components/classroom/form/CreateClassroomForm";
+import Navbar from "../../components/bars/Navbar/Navbar";
+import Footer from "../../components/bars/footer/Footer";
+import CreateClassroomForm from "../../components/classroom/form/CreateClassroomForm";
 
 export default function CreateClassroom() {
   return (

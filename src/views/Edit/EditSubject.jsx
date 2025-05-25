@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/bars/Navbar/Navbar";
-import Footer from "../components/bars/footer/Footer";
-import EditSubjectForm from "../components/subjects/forms/EditSubjectForm";
-import { getSubjectById } from "../utils/subjects/subjectsApi";
+import Navbar from "../../components/bars/Navbar/Navbar";
+import Footer from "../../components/bars/footer/Footer";
+import EditSubjectForm from "../../components/subjects/forms/EditSubjectForm";
+import { getSubjectById } from "../../utils/subjects/subjectsApi";
 
 export default function EditSubject() {
   const [subject, setSubject] = useState(null);

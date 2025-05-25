@@ -3,10 +3,9 @@ import Navbar from "../components/bars/Navbar/Navbar";
 import Footer from "../components/bars/footer/Footer";
 import Table from "../components/shared/Table.jsx";
 import CreateNewButton from "../components/shared/CreateNewButton.jsx";
-import {
-  fetchSubjects,
-  deleteSubject,
-} from "../utils/subjects/subjectsApi.js";
+import { fetchSubjects, deleteSubject } from "../utils/subjects/subjectsApi.js";
+import SubjectSelectCard from "../components/subjects/SubjectSelectCard.jsx";
+import MontajeImg from "../assets/subjects_images/Montaje.png";
 
 export default function Subjects() {
   const [subjects, setSubjects] = useState([]);
@@ -58,28 +57,75 @@ export default function Subjects() {
           </div>
         )}
 
-        <div className="mt-6 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
-          <div className="flex flex-col w-full justify-center items-center space-y-5">
-            <h2 className="text-4xl text-white font-sansation">
-              Tabla de asignaturas
-            </h2>
-            <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
-          </div>
-          <div className="my-5">
-            {isLoading ? (
-              <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
-                <span>Cargando...</span>
-              </div>
-            ) : (
-              <Table
-                data={subjects}
-                columns={columns}
-                url={"subjects"}
-                onDeleteItem={deleteSubject}
+        <div className="flex flex-col space-y-5">
+          <div className="w-full flex flex-col mt-10 py-4 px-10">
+            <div className="flex flex-col w-full justify-center items-center space-y-5">
+              <h2 className="text-4xl text-white font-sansation">
+                Asignaturas
+              </h2>
+              <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
+            </div>
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 px-10">
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Montaje y mantenimiento"
               />
-            )}
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Progrmación"
+              />
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Lenguaje de marcas"
+              />
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Diseño web"
+              />
+            </div>
+                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 px-10">
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Bases de datos"
+              />
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Sistemas informáticos"
+              />
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Acceso a datos"
+              />
+              <SubjectSelectCard
+                image={MontajeImg}
+                title="Entornos de desarrollo"
+              />
+            </div>
           </div>
-          <CreateNewButton url="/subjects/create" />
+
+          <div className="mt-6 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
+            <div className="flex flex-col w-full justify-center items-center space-y-5">
+              <h2 className="text-4xl text-white font-sansation">
+                Tabla de asignaturas
+              </h2>
+              <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
+            </div>
+            <div className="my-5">
+              {isLoading ? (
+                <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+                  <span>Cargando...</span>
+                </div>
+              ) : (
+                <Table
+                  data={subjects}
+                  columns={columns}
+                  url={"subjects"}
+                  onDeleteItem={deleteSubject}
+                />
+              )}
+            </div>
+            <CreateNewButton url="/subjects/create" />
+          </div>
         </div>
       </main>
       <Footer />

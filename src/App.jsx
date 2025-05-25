@@ -9,24 +9,24 @@ import Register from "./views/Register";
 import Home from "./views/Home";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Users from "./views/Users";
-import UserDetail from "./components/users/UserDetail";
-import CreateUser from "./views/CreateUser";
-import EditUser from "./views/EditUser";
+import CreateUser from "./views/Create/CreateUser";
+import EditUser from "./views/Edit/EditUser";
 import Computers from "./views/Computers";
-import CreateComputer from "./views/CreateComputer";
-import EditComputer from "./views/EditComputer";
-import CreateTable from "./views/CreateTable";
-import EditTable from "./views/EditTable";
+import CreateComputer from "./views/Create/CreateComputer";
+import EditComputer from "./views/Edit/EditComputer";
+import CreateTable from "./views/Create/CreateTable";
+import EditTable from "./views/Edit/EditTable";
 import Subjects from "./views/Subjects";
 import Tables from "./views/Tables";
-import CreateSubject from "./views/CreateSubject";
-import EditSubject from "./views/EditSubject";
+import CreateSubject from "./views/Create/CreateSubject";
+import EditSubject from "./views/Edit/EditSubject";
 import Grades from "./views/Grades";
-import CreateGrade from "./views/CreateGrade";
-import EditGrade from "./views/EditGrade";
+import CreateGrade from "./views/Create/CreateGrade";
+import EditGrade from "./views/Edit/EditGrade";
 import Classrooms from "./views/Classrooms";
-import CreateClassroom from "./views/CreateClassroom";
-import EditClassroom from "./views/EditClassroom";
+import CreateClassroom from "./views/Create/CreateClassroom";
+import EditClassroom from "./views/Edit/EditClassroom";
+import UserGrades from "./views/UserGrades/UserGrades";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -155,15 +155,6 @@ function App() {
         />
 
         <Route
-          path="/user/:id"
-          element={
-            <PrivateRoute>
-              <UserDetail />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
           path="/user/edit/:id"
           element={
             <PrivateRoute>
@@ -213,6 +204,15 @@ function App() {
           element={
             <PrivateRoute>
               <EditClassroom />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/grades/:id"
+          element={
+            <PrivateRoute>
+              <UserGrades />
             </PrivateRoute>
           }
         />

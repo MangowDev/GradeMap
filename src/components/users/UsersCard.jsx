@@ -5,11 +5,12 @@ export default function UsersCard({ user, classroomCache, isPlaceholder = false 
   const [isLoading, setIsLoading] = useState(true);
   const classroom = classroomCache?.[user?.id];
 
-  useEffect(() => {
-    if (classroom || isPlaceholder) {
-      setIsLoading(false);
-    }
-  }, [classroom, isPlaceholder]);
+useEffect(() => {
+  if (classroom !== undefined || isPlaceholder) {
+    setIsLoading(false);
+  }
+}, [classroom, isPlaceholder]);
+
 
   if (isLoading) {
     return (

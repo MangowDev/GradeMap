@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/bars/Navbar/Navbar";
-import Footer from "../components/bars/footer/Footer";
-import EditGradeForm from "../components/grades/form/EditGradeForm";
-import { getGradeById } from "../utils/grades/gradesApi";
+import Navbar from "../../components/bars/Navbar/Navbar";
+import Footer from "../../components/bars/footer/Footer";
+import EditGradeForm from "../../components/grades/form/EditGradeForm";
+import { getGradeById } from "../../utils/grades/gradesApi";
 
 export default function EditGrade() {
   const [grade, setGrade] = useState(null);

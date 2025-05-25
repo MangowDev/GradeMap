@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import placeholderUser from "../../../assets/placeholder-images/profilepicture.png";
 import { updateUser } from "../../../utils/users/usersApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function EditUserForm({ user }) {
   const initialData = {
@@ -140,6 +140,14 @@ export default function EditUserForm({ user }) {
             </button>
           )}
         </div>
+        <Link
+          to={`/user/grades/${user.id}`}
+          className="mt-2 w-[80%] flex flex-row justify-center items-center"
+        >
+          <button className="group w-[90%] text-2xl text-primary mt-6 p-3 px-4 rounded-lg bg-details hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
+            Ver calificaciones
+          </button>
+        </Link>
       </div>
 
       <div className="flex items-center justify-center flex-col w-2/3">
