@@ -15,12 +15,12 @@ export default function UserGrades() {
   const [grades, setGrades] = useState([]);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Estado de carga agregado
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Empieza la carga
-      setError(null); // Resetea error
+      setIsLoading(true);
+      setError(null);
       try {
         const [gradesData, userData] = await Promise.all([
           getUserGrades(id),
@@ -32,7 +32,7 @@ export default function UserGrades() {
         setError("Error al obtener los datos del usuario.");
         console.error(err);
       } finally {
-        setIsLoading(false); // Finaliza la carga
+        setIsLoading(false);
       }
     };
 
@@ -64,9 +64,9 @@ export default function UserGrades() {
         ) : user && grades && !isLoading ? (
           <UserGradeInfo user={user} grades={grades} />
         ) : (
-                        <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
-                <span>Cargando datos...</span>
-              </div>
+          <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+            <span>Cargando datos...</span>
+          </div>
         )}
 
         <div className="mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
@@ -92,7 +92,7 @@ export default function UserGrades() {
           </div>
           <CreateNewButton
             url="/grades/create"
-            state={{ from: location.pathname }}
+            state={{ from: location.pathname, userId: id }}
           />
         </div>
       </main>

@@ -1,15 +1,11 @@
--Revisar el padding de los inputs de name y surname en el formulario de register
-
--Hacer que el tamaño de las barras del logo del login sean porcentuales
-
 -Arreglar colores del login al hacer zoom en el navegador
 
 -Hacer que el mensaje exitoso de create user se vea despues de recargar la pagina
-
--Hacer el user details
 
 -Añadir imagen a los usuarios, y hacer que el boton de cambiar imagen del formulario funcione
 
 -Hacer que el modal delete muestre un mensaje dinamico dependiendo del tipo de dato que este borrando
 
 -Hacer que al crear o editar mesas, se le puedan asignar varios ordenadores
+
+-Hacer el subject list

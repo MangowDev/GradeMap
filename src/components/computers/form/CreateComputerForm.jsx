@@ -9,8 +9,6 @@ import { fetchUsers } from "../../../utils/users/usersApi";
 import { fetchBoards } from "../../../utils/boards/boardsApi";
 import { getClassroomById } from "../../../utils/classrooms/classroomsApi";
 
-// ... importaciones sin cambios
-
 export default function CreateComputerForm() {
   const [formData, setFormData] = useState({
     user_id: "",

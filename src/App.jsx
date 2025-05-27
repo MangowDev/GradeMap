@@ -27,6 +27,13 @@ import Classrooms from "./views/Classrooms";
 import CreateClassroom from "./views/Create/CreateClassroom";
 import EditClassroom from "./views/Edit/EditClassroom";
 import UserGrades from "./views/UserGrades/UserGrades";
+import SubjectList from "./views/SubjectList/SubjectList";
+import UserDetails from "./views/Details/UserDetails";
+import ComputerDetails from "./views/Details/ComputerDetails";
+import GradeDetails from "./views/Details/GradeDetails";
+import ClassroomDetails from "./views/Details/ClassroomDetails";
+import TableDetails from "./views/Details/TablesDetails";
+import SubjectDetails from "./views/Details/SubjectDetails";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -216,6 +223,71 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        <Route
+          path="/subjects/list/:id"
+          element={
+            <PrivateRoute>
+              <SubjectList />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/user/read/:id"
+          element={
+            <PrivateRoute>
+              <UserDetails />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/computer/read/:id"
+          element={
+            <PrivateRoute>
+              <ComputerDetails />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/grade/read/:id"
+          element={
+            <PrivateRoute>
+              <GradeDetails />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/classroom/read/:id"
+          element={
+            <PrivateRoute>
+              <ClassroomDetails />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/table/read/:id"
+          element={
+            <PrivateRoute>
+              <TableDetails />
+            </PrivateRoute>
+          }
+        />
+        
+        <Route
+          path="/subjects/read/:id"
+          element={
+            <PrivateRoute>
+              <SubjectDetails />
+            </PrivateRoute>
+          }
+        />
+
+        
 
         <Route
           path="/"

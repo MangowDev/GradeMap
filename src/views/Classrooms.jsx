@@ -5,6 +5,8 @@ import Table from "../components/shared/Table.jsx";
 import CreateNewButton from "../components/shared/CreateNewButton.jsx";
 import { fetchClassrooms } from "../utils/classrooms/classroomsApi.js";
 import { deleteClassroom } from "../utils/classrooms/classroomsApi.js";
+import ClassroomMap from "../components/classroom/ClassroomMap.jsx";
+import DAWMapImg from "../assets/page_images/2DAW.png";
 
 export default function Classrooms() {
   const [classrooms, setClassrooms] = useState([]);
@@ -52,6 +54,23 @@ export default function Classrooms() {
         <div className="w-full flex flex-col font-sansation space-y-5 text-details2 text-5xl font-bold">
           <h1>Página de aulas</h1>
           <div className="w-full h-1.5 bg-cuaternary border-1 rounded-lg border-details"></div>
+        </div>
+
+        <div className="w-full flex flex-col mt-10 py-4 px-10">
+          <div className="flex flex-col w-full justify-center items-center space-y-5">
+            <h2 className="text-4xl text-white font-sansation">Mapas de aulas</h2>
+            <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
+          </div>
+          {isLoading ? (
+            <div className="font-rubik mt-6 text-white text-center text-2xl flex flex-row items-center justify-center">
+              <span>Cargando...</span>
+            </div>
+          ) : (
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-8 px-10">
+              <ClassroomMap title="1º DAW" image={DAWMapImg}/>
+              <ClassroomMap title="2º DAW" image={DAWMapImg}/>
+            </div>
+          )}
         </div>
 
         {error && (

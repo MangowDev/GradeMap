@@ -11,6 +11,7 @@ export default function Subjects() {
   const [subjects, setSubjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showAllSubjects, setShowAllSubjects] = useState(false);
 
   useEffect(() => {
     const getSubjects = async () => {
@@ -65,42 +66,34 @@ export default function Subjects() {
               </h2>
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 px-10">
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Montaje y mantenimiento"
-              />
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Progrmación"
-              />
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Lenguaje de marcas"
-              />
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Diseño web"
-              />
-            </div>
-                        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 px-10">
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Bases de datos"
-              />
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Sistemas informáticos"
-              />
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Acceso a datos"
-              />
-              <SubjectSelectCard
-                image={MontajeImg}
-                title="Entornos de desarrollo"
-              />
-            </div>
+            {isLoading ? (
+              <div className="font-rubik mt-6 text-white text-center text-2xl flex flex-row items-center justify-center">
+                <span>Cargando...</span>
+              </div>
+            ) : (
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 px-10">
+                {(showAllSubjects ? subjects : subjects.slice(0, 8)).map(
+                  (subject) => (
+                    <SubjectSelectCard
+                      key={subject.id}
+                      image={MontajeImg}
+                      id={subject.id}
+                      title={subject.name}
+                    />
+                  )
+                )}
+              </div>
+            )}
+            {subjects.length > 8 && (
+              <div className="mt-8 w-full flex flex-row justify-center items-center">
+                <button
+                  onClick={() => setShowAllSubjects((prev) => !prev)}
+                  className="bg-secondary text-primary font-sansation text-2xl px-6 py-2 rounded-md hover:bg-cuaternary hover:text-tertiary hover:cursor-pointer transition duration-200"
+                >
+                  {showAllSubjects ? "Ver menos" : "Ver más"}
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="mt-6 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">

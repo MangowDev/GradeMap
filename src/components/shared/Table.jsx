@@ -15,7 +15,12 @@ import {
 import { Link } from "react-router-dom";
 import { DeleteModal } from "./DeleteModal";
 
-export default function Table({ data, columns: columnsProp, onDeleteItem, url }) {
+export default function Table({
+  data,
+  columns: columnsProp,
+  onDeleteItem,
+  url,
+}) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -28,15 +33,16 @@ export default function Table({ data, columns: columnsProp, onDeleteItem, url })
         id: "actions",
         cell: ({ row }) => (
           <div className="flex gap-3 flex-row items-center text-white text-lg">
-            <FaEye
-              className="cursor-pointer hover:text-tertiary transition"
-              size={21}
-              title="Ver"
-              onClick={() => console.log("Ver", row.original)}
-            />
+            <Link to={`/${url}/read/${row.original.id}`}>
+              <FaEye
+                className="cursor-pointer hover:text-tertiary transition"
+                size={21}
+                title="Ver"
+              />
+            </Link>
             <Link to={`/${url}/edit/${row.original.id}`}>
               <FaEdit
-                className="cursor-pointer hover:text-yellow-400 transition"
+                className="cursor-pointer hover:text-tertiary transition"
                 size={21}
                 title="Editar"
               />

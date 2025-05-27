@@ -53,10 +53,10 @@ export default function UserGradeInfo({ user, grades }) {
           <div className="flex flex-col w-full space-y-8">
             <div>
               <span className="text-2xl font-rubik text-white">
-                Asignaturas:{" "}
+                Asignaturas:{" [ "}
                 {asignaturas.length > 0
                   ? asignaturas.join(", ")
-                  : "No hay asignaturas"}
+                  : "No hay asignaturas"} {" ] "}
               </span>
             </div>
             <div>

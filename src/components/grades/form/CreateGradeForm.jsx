@@ -42,6 +42,16 @@ export default function CreateGradeForm() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const userIdFromState = location.state?.userId;
+    if (userIdFromState) {
+      setFormData((prev) => ({
+        ...prev,
+        user_id: userIdFromState,
+      }));
+    }
+  }, [location.state]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -143,6 +153,7 @@ export default function CreateGradeForm() {
               name="user_id"
               value={formData.user_id}
               onChange={handleChange}
+              disabled={!!location.state?.userId}
               className="mt-2 font-rubik block w-full rounded-lg bg-details text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-cuaternary"
             >
               <option value="">Selecciona un usuario</option>
