@@ -1,16 +1,12 @@
-const token = localStorage.getItem("auth_token");
-
 export const fetchSubjects = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(
-      `http://localhost:8000/api/subjects`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}subjects`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       if (response.status === 404) return null;
@@ -26,7 +22,7 @@ export const fetchSubjects = async () => {
 
 export const getSubjectById = async (id) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/subjects/${id}`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}subjects/${id}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch subject");
@@ -41,8 +37,9 @@ export const getSubjectById = async (id) => {
 };
 
 export const createSubject = async (subjectData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/subjects", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}subjects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,8 +61,9 @@ export const createSubject = async (subjectData) => {
 };
 
 export const updateSubject = async (id, subjectData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/subjects/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}subjects/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -87,11 +85,9 @@ export const updateSubject = async (id, subjectData) => {
   }
 };
 
-
-
 export const deleteSubject = async (id) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/subjects/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}subjects/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

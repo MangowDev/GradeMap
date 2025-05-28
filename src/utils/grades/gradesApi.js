@@ -1,8 +1,7 @@
-const token = localStorage.getItem("auth_token");
-
 export const fetchGrades = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://localhost:8000/api/grades", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}grades`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -14,7 +13,6 @@ export const fetchGrades = async () => {
     }
 
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error("Error obteniendo las notas:", error);
@@ -23,9 +21,10 @@ export const fetchGrades = async () => {
 };
 
 export const fetchGradesWithDetails = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
     const response = await fetch(
-      `http://localhost:8000/api/grades/details`,
+      `${import.meta.env.VITE_BACKEND_URL}grades/details`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -47,8 +46,9 @@ export const fetchGradesWithDetails = async () => {
 };
 
 export const createGrade = async (gradeData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/grades", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}grades`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,18 +69,21 @@ export const createGrade = async (gradeData) => {
   }
 };
 
-
 export const updateGrade = async (id, gradeData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/grades/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(gradeData),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}grades/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(gradeData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Error al actualizar la nota");
@@ -95,29 +98,36 @@ export const updateGrade = async (id, gradeData) => {
 };
 
 export const getGradeById = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/grades/${id}`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}grades/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch grade");
+      throw new Error("Error al obtener la nota");
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(`Error fetching grade with ID ${id}:`, error);
+    console.error(`Error obteniendo la nota con ID ${id}:`, error);
     throw error;
   }
 };
 
-
 export const deleteGrade = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/grades/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}grades/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 

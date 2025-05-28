@@ -1,8 +1,8 @@
-const token = localStorage.getItem("auth_token");
 export const fetchComputersWithDetails = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
     const response = await fetch(
-      `http://localhost:8000/api/computers/details`,
+      `${import.meta.env.VITE_BACKEND_URL}computers/details`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,8 +24,9 @@ export const fetchComputersWithDetails = async () => {
 };
 
 export const createComputer = async (computerData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/computers", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}computers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,16 +48,20 @@ export const createComputer = async (computerData) => {
 };
 
 export const updateComputer = async (id, computerData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/computers/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(computerData),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}computers/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(computerData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Error al actualizar el ordenador");
@@ -71,14 +76,19 @@ export const updateComputer = async (id, computerData) => {
 };
 
 export const deleteComputer = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/computers/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}computers/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Error al borrar el ordenador");
@@ -93,8 +103,17 @@ export const deleteComputer = async (id) => {
 };
 
 export const getComputerById = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/computers/${id}`);
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}computers/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch computer");
@@ -107,4 +126,3 @@ export const getComputerById = async (id) => {
     throw error;
   }
 };
-

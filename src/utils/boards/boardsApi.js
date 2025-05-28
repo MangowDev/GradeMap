@@ -1,8 +1,7 @@
-const token = localStorage.getItem("auth_token");
-
 export const fetchBoards = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://localhost:8000/api/boards", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -14,7 +13,6 @@ export const fetchBoards = async () => {
     }
 
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error("Error fetching boards:", error);
@@ -22,19 +20,15 @@ export const fetchBoards = async () => {
   }
 };
 
-
-
 export const fetchBoardsWithDetails = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(
-      `http://localhost:8000/api/boards/details`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards/details`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       if (response.status === 404) return null;
@@ -49,8 +43,9 @@ export const fetchBoardsWithDetails = async () => {
 };
 
 export const createBoard = async (boardData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/boards", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,10 +66,10 @@ export const createBoard = async (boardData) => {
   }
 };
 
-
 export const updateBoard = async (id, boardData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/boards/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -97,8 +92,14 @@ export const updateBoard = async (id, boardData) => {
 };
 
 export const getBoardById = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/boards/${id}`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch board");
@@ -112,14 +113,15 @@ export const getBoardById = async (id) => {
   }
 };
 
-
 export const deleteBoard = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/boards/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 

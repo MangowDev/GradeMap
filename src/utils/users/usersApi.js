@@ -1,8 +1,7 @@
-const token = localStorage.getItem("auth_token");
-
 export const fetchUsers = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://localhost:8000/api/users", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -14,7 +13,6 @@ export const fetchUsers = async () => {
     }
 
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -22,10 +20,10 @@ export const fetchUsers = async () => {
   }
 };
 
-
 export const fetchRecentUsers = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://localhost:8000/api/users/recent", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/recent`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -45,16 +43,14 @@ export const fetchRecentUsers = async () => {
 };
 
 export const fetchUserClassroom = async (userId) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(
-      `http://localhost:8000/api/users/${userId}/classroom`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${userId}/classroom`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       if (response.status === 404) return null;
@@ -69,8 +65,9 @@ export const fetchUserClassroom = async (userId) => {
 };
 
 export const createUser = async (userData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/users", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,8 +89,9 @@ export const createUser = async (userData) => {
 };
 
 export const updateUser = async (id, userData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +115,7 @@ export const updateUser = async (id, userData) => {
 
 export const deleteUser = async (id) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -139,7 +137,7 @@ export const deleteUser = async (id) => {
 
 export const getUserById = async (id) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/users/${id}`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${id}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch user");
@@ -153,10 +151,9 @@ export const getUserById = async (id) => {
   }
 };
 
-
 export const getUserGrades = async (id) => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/users/${id}/grades`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/${id}/grades`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch user grades");

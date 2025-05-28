@@ -1,8 +1,7 @@
-const token = localStorage.getItem("auth_token");
-
 export const fetchClassrooms = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://localhost:8000/api/classrooms/details", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms/details`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -14,7 +13,6 @@ export const fetchClassrooms = async () => {
     }
 
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error("Error fetching classrooms:", error);
@@ -23,8 +21,9 @@ export const fetchClassrooms = async () => {
 };
 
 export const fetchBoards = async () => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://localhost:8000/api/classrooms", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -36,7 +35,6 @@ export const fetchBoards = async () => {
     }
 
     const data = await response.json();
-
     return data;
   } catch (error) {
     console.error("Error fetching classrooms:", error);
@@ -45,8 +43,14 @@ export const fetchBoards = async () => {
 };
 
 export const getClassroomById = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/classrooms/${id}`);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch classroom");
@@ -61,8 +65,9 @@ export const getClassroomById = async (id) => {
 };
 
 export const createClassroom = async (classroomData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/classrooms", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,8 +89,9 @@ export const createClassroom = async (classroomData) => {
 };
 
 export const updateClassroom = async (id, classroomData) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/classrooms/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -108,12 +114,14 @@ export const updateClassroom = async (id, classroomData) => {
 };
 
 export const deleteClassroom = async (id) => {
+  const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/classroom/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -128,4 +136,3 @@ export const deleteClassroom = async (id) => {
     throw error;
   }
 };
-

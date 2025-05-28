@@ -1,8 +1,6 @@
-// loginApi.js
-
 export const registerUser = async (userData) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/register", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +22,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (userData) => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/login", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +46,7 @@ export const logoutUser = async (navigate) => {
   const token = localStorage.getItem("auth_token");
 
   try {
-    await fetch("http://localhost:8000/api/logout", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}logout`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
