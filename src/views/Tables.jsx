@@ -7,6 +7,7 @@ import {
   fetchBoardsWithDetails,
   deleteBoard,
 } from "../utils/boards/boardsApi.js";
+import { header } from "framer-motion/client";
 
 export default function Tables() {
   const [boards, setBoards] = useState([]);
@@ -26,6 +27,7 @@ export default function Tables() {
         const formatted = data.map((board) => ({
           id: board.id,
           classroom: board.classroom?.name || "Sin aula",
+          size: board.size || "No especificado",
           computer:
             board.computers?.length > 0
               ? board.computers.map((c) => c.id).join(", ")
@@ -47,6 +49,7 @@ export default function Tables() {
   const columns = [
     { header: "ID", accessorKey: "id" },
     { header: "Aula", accessorKey: "classroom" },
+    { header: "Tamaño", accessorKey: "size" },
     { header: "Ordenadores asignados", accessorKey: "computer" },
   ];
 

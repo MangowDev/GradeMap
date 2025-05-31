@@ -64,6 +64,28 @@ export const getClassroomById = async (id) => {
   }
 };
 
+export const getClassroomDetails = async (id) => {
+  const token = localStorage.getItem("auth_token");
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}classrooms/${id}/details`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch classroom details");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching classroom details with ID ${id}:`, error);
+    throw error;
+  }
+};
+
 export const createClassroom = async (classroomData) => {
   const token = localStorage.getItem("auth_token");
   try {

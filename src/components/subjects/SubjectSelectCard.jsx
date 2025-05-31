@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function SubjectSelectCard({id, image, title }) {
+  console.log(image);
+  
   return (
     <div className="flex flex-col items-center justify-between space-y-5 py-8 px-10 rounded-xl bg-cuaternary border-2 border-details">
       <div className="flex flex-col items-center justify-center space-y-4">

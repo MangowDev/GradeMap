@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createSubject } from "../../../utils/subjects/subjectsApi";
 
 export default function CreateSubjectForm() {
-  const [formData, setFormData] = useState({ name: "" });
+  const [formData, setFormData] = useState({ name: "", image: ""});
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +56,20 @@ export default function CreateSubjectForm() {
             type="text"
             name="name"
             value={formData.name}
+            onChange={handleChange}
+            className="mt-2 block w-full rounded-lg bg-details text-white text-xl py-2 px-3 border-b-2 border-cuaternary"
+            placeholder="Ej. Matemáticas"
+          />
+        </div>
+
+        <div>
+          <label className="block text-2xl font-sansation text-details2">
+            Imagen (URL):
+          </label>
+          <input
+            type="text"
+            name="image"
+            value={formData.image}
             onChange={handleChange}
             className="mt-2 block w-full rounded-lg bg-details text-white text-xl py-2 px-3 border-b-2 border-cuaternary"
             placeholder="Ej. Matemáticas"

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import placeholderUser from "../../../assets/placeholder-images/profilepicture.png";
 import { updateUser } from "../../../utils/users/usersApi";
 import { Link, useNavigate } from "react-router-dom";
+import { fetchComputersWithDetails } from "../../../utils/computers/computersApi";
 
 export default function EditUserForm({ user }) {
   const initialData = {
@@ -23,6 +24,7 @@ export default function EditUserForm({ user }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [availableComputers, setAvailableComputers] = useState([]);
 
   const navigate = useNavigate();
 
@@ -30,6 +32,30 @@ export default function EditUserForm({ user }) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    const loadAvailableComputers = async () => {
+      const allComputers = await fetchComputersWithDetails();
+      if (!allComputers) return;
+
+      const unassigned = allComputers.filter(
+        (comp) => !comp.user || comp.user === null
+      );
+
+      if (user.computer_id) {
+        const currentComputer = allComputers.find(
+          (comp) => comp.id === user.computer_id
+        );
+        if (currentComputer) {
+          unassigned.unshift(currentComputer);
+        }
+      }
+
+      setAvailableComputers(unassigned);
+    };
+
+    loadAvailableComputers();
+  }, [user.computer_id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,9 +140,8 @@ export default function EditUserForm({ user }) {
           <label className="block text-xl sm:text-2xl font-medium font-sansation text-details2">
             Ordenador:
           </label>
-          <input
+          <select
             name="computer_id"
-            type="number"
             value={formData.computer_id === null ? "" : formData.computer_id}
             onChange={(e) => {
               const value = e.target.value;
@@ -126,13 +151,20 @@ export default function EditUserForm({ user }) {
               }));
             }}
             className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-cuaternary focus:ring-cuaternary hover:pl-3 transition-all duration-200"
-            placeholder="Opcional"
-          />
-          {formData.computer_id !== null && (
+          >
+            <option value="">Sin ordenador</option>
+            {availableComputers.map((computer) => (
+              <option key={computer.id} value={computer.id}>
+                Ordenador {computer.id}
+              </option>
+            ))}
+          </select>
+
+          {formData.computer_id !== null && formData.computer_id !== "" && (
             <button
               type="button"
               onClick={() =>
-                setFormData((prev) => ({ ...prev, computer_id: null }))
+                setFormData((prev) => ({ ...prev, computer_id: "" }))
               }
               className="mt-2 text-md text-red-500 hover:underline hover:cursor-pointer"
             >

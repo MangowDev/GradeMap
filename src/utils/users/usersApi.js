@@ -20,10 +20,10 @@ export const fetchUsers = async () => {
   }
 };
 
-export const fetchRecentUsers = async () => {
+export const fetchAllUsersWithClassrooms = async () => {
   const token = localStorage.getItem("auth_token");
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/recent`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}users/classroom`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -31,13 +31,13 @@ export const fetchRecentUsers = async () => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch recent users");
+      throw new Error("Failed to fetch users");
     }
 
     const data = await response.json();
-    return data.slice(0, 21);
+    return data;
   } catch (error) {
-    console.error("Error fetching recent users:", error);
+    console.error("Error fetching users:", error);
     return [];
   }
 };

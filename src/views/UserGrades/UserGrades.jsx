@@ -64,8 +64,9 @@ export default function UserGrades() {
         ) : user && grades && !isLoading ? (
           <UserGradeInfo user={user} grades={grades} />
         ) : (
-          <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
-            <span>Cargando datos...</span>
+          <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+            <span>Cargando...</span>
           </div>
         )}
 
@@ -78,7 +79,8 @@ export default function UserGrades() {
           </div>
           <div className="my-5">
             {isLoading ? (
-              <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+              <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                 <span>Cargando...</span>
               </div>
             ) : (

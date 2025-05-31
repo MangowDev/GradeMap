@@ -126,3 +126,57 @@ export const getComputerById = async (id) => {
     throw error;
   }
 };
+
+
+export const getComputerDetails = async (id) => {
+  const token = localStorage.getItem("auth_token");
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}computers/${id}/details`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch computer details");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching computer details with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export const getComputersBatchDetails = async (ids) => {
+  const token = localStorage.getItem("auth_token");
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}computers/batch-details`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ ids }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch batch computer details");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching batch computer details:", error);
+    throw error;
+  }
+};

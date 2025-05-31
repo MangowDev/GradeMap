@@ -66,29 +66,30 @@ export default function Grades() {
           </div>
         )}
 
-          <div className="mt-6 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
-            <div className="flex flex-col w-full justify-center items-center space-y-5">
-              <h2 className="text-4xl text-white font-sansation">
-                Tabla de calificaciones
-              </h2>
-              <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
-            </div>
-            <div className="my-5">
-              {isLoading ? (
-                <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
-                  <span>Cargando...</span>
-                </div>
-              ) : (
-                <Table
-                  data={grades}
-                  columns={columns}
-                  url={"grade"}
-                  onDeleteItem={deleteGrade}
-                />
-              )}
-            </div>
-            <CreateNewButton url="create" />
+        <div className="mt-6 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
+          <div className="flex flex-col w-full justify-center items-center space-y-5">
+            <h2 className="text-4xl text-white font-sansation">
+              Tabla de calificaciones
+            </h2>
+            <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
           </div>
+          <div className="my-5">
+            {isLoading ? (
+              <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
+                <span>Cargando...</span>
+              </div>
+            ) : (
+              <Table
+                data={grades}
+                columns={columns}
+                url={"grade"}
+                onDeleteItem={deleteGrade}
+              />
+            )}
+          </div>
+          <CreateNewButton url="create" />
+        </div>
       </main>
       <Footer />
     </div>

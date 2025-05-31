@@ -7,6 +7,7 @@ import { fetchClassrooms } from "../../../utils/classrooms/classroomsApi";
 export default function CreateTableForm() {
   const [formData, setFormData] = useState({
     classroom_id: "",
+    size: "",
   });
 
   const [classrooms, setClassrooms] = useState([]);
@@ -36,8 +37,14 @@ export default function CreateTableForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.classroom_id) {
       setError("Selecciona un aula.");
+      return;
+    }
+
+    if (!formData.size || isNaN(formData.size) || formData.size < 1 || formData.size > 5) {
+      setError("El tamaño debe ser un número entre 1 y 5.");
       return;
     }
 
@@ -45,10 +52,10 @@ export default function CreateTableForm() {
       setIsLoading(true);
       setError(null);
       await createBoard(formData);
-
       setSuccessMessage("¡Mesa creada con éxito!");
       setTimeout(() => navigate("/tables"), 1500);
     } catch (err) {
+      console.error(err);
       setError("Error al crear la mesa.");
     } finally {
       setIsLoading(false);
@@ -65,7 +72,6 @@ export default function CreateTableForm() {
       </div>
 
       <div className="w-full max-w-xl space-y-6">
-        {/* Aula */}
         <div>
           <label className="block text-2xl font-sansation text-details2">
             Asignar aula:
@@ -83,6 +89,22 @@ export default function CreateTableForm() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label className="block text-2xl font-sansation text-details2">
+            Tamaño de la mesa (máx. 5):
+          </label>
+          <input
+            type="number"
+            name="size"
+            min="1"
+            max="5"
+            value={formData.size}
+            onChange={handleChange}
+            className="mt-2 block w-full rounded-lg bg-details text-white text-xl py-2 px-3 border-b-2 border-cuaternary"
+            placeholder="Introduce el tamaño"
+          />
         </div>
 
         {error && <p className="text-red-500 text-center">{error}</p>}

@@ -27,7 +27,8 @@ export default function EditUser() {
       <div className="min-h-screen flex flex-col bg-secondary">
         <Navbar />
         <main className="flex-grow">
-          <div className="flex flex-row text-4xl text-details2 justify-center items-center py-50 font-sansation">
+          <div className="flex flex-row text-4xl text-details2 justify-center space-x-10 items-center py-50 font-sansation">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
             <h1>Cargando...</h1>
           </div>
         </main>

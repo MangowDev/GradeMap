@@ -5,7 +5,7 @@ import Table from "../components/shared/Table.jsx";
 import CreateNewButton from "../components/shared/CreateNewButton.jsx";
 import { fetchSubjects, deleteSubject } from "../utils/subjects/subjectsApi.js";
 import SubjectSelectCard from "../components/subjects/SubjectSelectCard.jsx";
-import MontajeImg from "../assets/subjects_images/Montaje.png";
+import { header } from "framer-motion/m";
 
 export default function Subjects() {
   const [subjects, setSubjects] = useState([]);
@@ -24,6 +24,7 @@ export default function Subjects() {
         const formatted = data.map((subject) => ({
           id: subject.id,
           name: subject.name,
+          image: subject.image,
         }));
 
         setSubjects(formatted);
@@ -41,6 +42,7 @@ export default function Subjects() {
   const columns = [
     { header: "ID", accessorKey: "id" },
     { header: "Nombre", accessorKey: "name" },
+    { header: "Imagen", accessorKey: "image" },
   ];
 
   return (
@@ -67,7 +69,8 @@ export default function Subjects() {
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
             {isLoading ? (
-              <div className="font-rubik mt-6 text-white text-center text-2xl flex flex-row items-center justify-center">
+              <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                 <span>Cargando...</span>
               </div>
             ) : (
@@ -76,7 +79,7 @@ export default function Subjects() {
                   (subject) => (
                     <SubjectSelectCard
                       key={subject.id}
-                      image={MontajeImg}
+                      image={subject.image}
                       id={subject.id}
                       title={subject.name}
                     />
@@ -105,7 +108,8 @@ export default function Subjects() {
             </div>
             <div className="my-5">
               {isLoading ? (
-                <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+                <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                   <span>Cargando...</span>
                 </div>
               ) : (

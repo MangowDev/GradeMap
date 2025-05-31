@@ -16,8 +16,8 @@ import SelectUserModal from "./SelectUserModal";
 import SelectComputerModal from "./SelectComputerModal";
 import DeleteComputerModal from "./DeleteComputerModal";
 
-export default function SecondDAWMap({ isOpen, onClose, children }) {
-  const classroomId = 1;
+export default function FirstDAWMap({ isOpen, onClose, children }) {
+  const classroomId = 2;
   const [classroomData, setClassroomData] = useState(null);
   const [totalComputers, setTotalComputers] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -192,69 +192,69 @@ useEffect(() => {
 
                 <div>
                   <MapButton
-                    text="Mesa 1"
+                    text="Mesa 10"
                     top="top-85"
-                    left="left-55"
-                    onClick={() => handleMapButtonClick(1)}
+                    left="left-99"
+                    onClick={() => handleMapButtonClick(10)}
                   />
                   <MapButton
-                    text="Mesa 2"
-                    top="top-88"
-                    left="left-105"
-                    onClick={() => handleMapButtonClick(2)}
+                    text="Mesa 11"
+                    top="top-85"
+                    left="left-163"
+                    onClick={() => handleMapButtonClick(11)}
                   />
                   <MapButton
-                    text="Mesa 3"
-                    top="top-91"
-                    left="left-160"
-                    onClick={() => handleMapButtonClick(3)}
+                    text="Mesa 12"
+                    top="top-85"
+                    left="right-103"
+                    onClick={() => handleMapButtonClick(12)}
                   />
                   <MapButton
-                    text="Mesa 4"
-                    top="top-95"
-                    left="left-225"
-                    onClick={() => handleMapButtonClick(4)}
+                    text="Mesa 13"
+                    top="top-85"
+                    left="right-45"
+                    onClick={() => handleMapButtonClick(13)}
                   />
                 </div>
                 <div>
                   <MapButton
-                    text="Mesa 5"
-                    top="top-123"
-                    left="left-25"
-                    onClick={() => handleMapButtonClick(5)}
-                  />
-                  <MapButton
-                    text="Mesa 6"
+                    text="Mesa 14"
                     top="top-130"
-                    left="left-72"
-                    onClick={() => handleMapButtonClick(6)}
+                    left="left-123"
+                    onClick={() => handleMapButtonClick(14)}
                   />
                   <MapButton
-                    text="Mesa 7"
+                    text="Mesa 15"
                     top="top-130"
-                    left="left-129"
-                    onClick={() => handleMapButtonClick(7)}
+                    left="left-187"
+                    onClick={() => handleMapButtonClick(15)}
                   />
                   <MapButton
-                    text="Mesa 8"
-                    top="top-132"
-                    left="left-195"
-                    onClick={() => handleMapButtonClick(8)}
+                    text="Mesa 16"
+                    top="top-130"
+                    left="right-77"
+                    onClick={() => handleMapButtonClick(16)}
+                  />
+                  <MapButton
+                    text="Mesa 17"
+                    top="top-126"
+                    left="right-23"
+                    onClick={() => handleMapButtonClick(17)}
                   />
                 </div>
 
                 <div>
                   <MapButton
-                    text="Mesa 9"
+                    text="Mesa 18"
                     top="top-80"
-                    right="right-25"
-                    onClick={() => handleMapButtonClick(9)}
+                    right="left-28"
+                    onClick={() => handleMapButtonClick(18)}
                   />
                 </div>
 
                 <MapButtonList
                   bottom="bottom-7"
-                  right="right-7"
+                  right="left-7"
                   info={classroomData}
                   totalComputers={totalComputers}
                   totalUsers={totalUsers}

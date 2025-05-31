@@ -1,8 +1,27 @@
 import React, { useState } from "react";
 import SecondDAWMap from "./maps/SecondDAWMap";
+import FirstDAWMap from "./maps/FirstDAWMap";
 
 export default function ClassroomMap({ image, title }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const renderMap = () => {
+    if (title === "1º DAW") {
+      return (
+        <FirstDAWMap isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <img src={image} alt={title} className="w-full h-auto rounded" />
+        </FirstDAWMap>
+      );
+    } else if (title === "2º DAW") {
+      return (
+        <SecondDAWMap isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <img src={image} alt={title} className="w-full h-auto rounded" />
+        </SecondDAWMap>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="flex flex-col items-center justify-between space-y-5 py-8 px-10 rounded-xl bg-cuaternary border-2 border-details">
@@ -20,9 +39,7 @@ export default function ClassroomMap({ image, title }) {
         Ver mapa
       </button>
 
-      <SecondDAWMap isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <img src={image} alt={title} className="w-full h-auto rounded" />
-      </SecondDAWMap>
+      {renderMap()}
     </div>
   );
 }

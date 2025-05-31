@@ -6,8 +6,7 @@ import {
   fetchComputersWithDetails,
 } from "../../../utils/computers/computersApi";
 import { fetchUsers } from "../../../utils/users/usersApi";
-import { fetchBoards } from "../../../utils/boards/boardsApi";
-import { getClassroomById } from "../../../utils/classrooms/classroomsApi";
+import { fetchBoardsWithDetails } from "../../../utils/boards/boardsApi";
 
 export default function CreateComputerForm() {
   const [formData, setFormData] = useState({
@@ -29,31 +28,13 @@ export default function CreateComputerForm() {
       try {
         const [usersData, boardsData, computersData] = await Promise.all([
           fetchUsers(),
-          fetchBoards(),
+          fetchBoardsWithDetails(),
           fetchComputersWithDetails(),
         ]);
 
         setUsers(usersData || []);
         setComputers(computersData || []);
-
-        const boardsWithClassroomNames = await Promise.all(
-          boardsData.map(async (board) => {
-            try {
-              const classroom = await getClassroomById(board.classroom_id);
-              return {
-                ...board,
-                classroom_name: classroom.name || "Sin aula",
-              };
-            } catch (err) {
-              return {
-                ...board,
-                classroom_name: "Aula no encontrada",
-              };
-            }
-          })
-        );
-
-        setBoards(boardsWithClassroomNames);
+        setBoards(boardsData || []);
       } catch (err) {
         console.error("Error al cargar datos:", err);
       }
@@ -98,7 +79,6 @@ export default function CreateComputerForm() {
     }
   };
 
-  // Lista de usuarios ya asignados a algún ordenador
   const assignedUserIds = computers
     .filter((c) => c.user?.id)
     .map((c) => String(c.user.id));
@@ -136,7 +116,6 @@ export default function CreateComputerForm() {
           </select>
         </div>
 
-        {/* Mesa */}
         <div>
           <label className="block text-2xl font-sansation text-details2">
             Asignar mesa:
@@ -150,7 +129,7 @@ export default function CreateComputerForm() {
             <option value="">Selecciona una mesa</option>
             {boards.map((board) => (
               <option key={board.id} value={board.id}>
-                Mesa ID: {board.id} - Aula: {board.classroom_name}
+                Mesa ID: {board.id} - Aula: {board.classroom?.name || "Sin aula"}
               </option>
             ))}
           </select>

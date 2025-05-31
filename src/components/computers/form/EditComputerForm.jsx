@@ -5,8 +5,7 @@ import {
 } from "../../../utils/computers/computersApi";
 import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "../../../utils/users/usersApi";
-import { fetchBoards } from "../../../utils/boards/boardsApi";
-import { getClassroomById } from "../../../utils/classrooms/classroomsApi";
+import { fetchBoardsWithDetails } from "../../../utils/boards/boardsApi";
 import computerImg from "../../../assets/page_images/computer.png";
 
 export default function EditComputerForm({ computer }) {
@@ -30,31 +29,13 @@ export default function EditComputerForm({ computer }) {
       try {
         const [usersData, boardsData, computersData] = await Promise.all([
           fetchUsers(),
-          fetchBoards(),
+          fetchBoardsWithDetails(), // ✅ esta llamada ya incluye classroom
           fetchComputersWithDetails(),
         ]);
 
         setUsers(usersData || []);
         setComputers(computersData || []);
-
-        const boardsWithClassroomNames = await Promise.all(
-          boardsData.map(async (board) => {
-            try {
-              const classroom = await getClassroomById(board.classroom_id);
-              return {
-                ...board,
-                classroom_name: classroom.name || "Sin aula",
-              };
-            } catch (err) {
-              return {
-                ...board,
-                classroom_name: "Aula no encontrada",
-              };
-            }
-          })
-        );
-
-        setBoards(boardsWithClassroomNames);
+        setBoards(boardsData || []);
       } catch (err) {
         console.error("Error al cargar datos:", err);
       }
@@ -163,7 +144,7 @@ export default function EditComputerForm({ computer }) {
             <option value="">Selecciona una mesa</option>
             {boards.map((board) => (
               <option key={board.id} value={board.id}>
-                Mesa ID: {board.id} - Aula: {board.classroom_name}
+                Mesa ID: {board.id} - Aula: {board.classroom?.name || "Sin aula"}
               </option>
             ))}
           </select>

@@ -113,6 +113,45 @@ export const getBoardById = async (id) => {
   }
 };
 
+export const getBoardDetails = async (id) => {
+  const token = localStorage.getItem("auth_token");
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards/${id}/details`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch board details");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching board details with ID ${id}:`, error);
+    throw error;
+  }
+};
+
+export async function getBoardsBatchDetails(boardIds) {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}boards/batch-details`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ids: boardIds }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error fetching multiple board details");
+  }
+
+  return response.json();
+}
+
+
 export const deleteBoard = async (id) => {
   const token = localStorage.getItem("auth_token");
   try {

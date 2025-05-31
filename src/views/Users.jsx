@@ -1,10 +1,7 @@
 import Navbar from "../components/bars/Navbar/Navbar";
 import Footer from "../components/bars/footer/Footer";
 import React, { useEffect, useState } from "react";
-import {
-  fetchRecentUsers,
-  fetchUserClassroom,
-} from "../utils/users/usersApi.js";
+import { fetchAllUsersWithClassrooms } from "../utils/users/usersApi.js";
 import { UsersCarousel } from "../components/users/carrousel/UsersCarousel";
 import "../components/users/carrousel/carousel.css";
 import Table from "../components/shared/Table.jsx";
@@ -13,29 +10,18 @@ import CreateNewButton from "../components/shared/CreateNewButton.jsx";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
-  const [classroomCache, setClassroomCache] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getUsersAndClassrooms = async () => {
+    const getUsersWithClassrooms = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        const recentUsers = await fetchRecentUsers();
-        setUsers(recentUsers);
+        const usersWithClassrooms = await fetchAllUsersWithClassrooms();
 
-        const classrooms = await Promise.all(
-          recentUsers.map((user) => fetchUserClassroom(user.id))
-        );
-
-        const newCache = {};
-        recentUsers.forEach((user, index) => {
-          newCache[user.id] = classrooms[index]?.classroom || null;
-        });
-
-        setClassroomCache(newCache);
+        setUsers(usersWithClassrooms);
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Error al cargar los datos. Por favor intenta nuevamente.");
@@ -44,12 +30,19 @@ export default function Users() {
       }
     };
 
-    getUsersAndClassrooms();
+    getUsersWithClassrooms();
   }, []);
 
-  const usersWithClassrooms = users.map((user) => ({
+  // Ordena usuarios por fecha creación (created_at) descendente y toma los 10 más recientes
+  const recentUsers = [...users]
+    .sort((a, b) => new Date(b.user.created_at) - new Date(a.user.created_at))
+    .slice(0, 10);
+
+  // Para la tabla y carousel, mostramos recentUsers pero adaptamos la estructura:
+  // classroom puede venir nulo, entonces ponemos "Sin clase asignada"
+  const usersWithClassrooms = recentUsers.map(({ user, classroom }) => ({
     ...user,
-    classroom: classroomCache[user.id]?.name || "Sin clase asignada",
+    classroom: classroom ? classroom.name : "Sin clase asignada",
     computer_id: user.computer_id || "N/A",
   }));
 
@@ -80,22 +73,27 @@ export default function Users() {
         <div className="flex flex-col space-y-5">
           <div className="w-full flex flex-col mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
             <div className="flex flex-col w-full justify-center items-center space-y-5">
-              <h2 className="text-4xl text-white font-sansation">Ultimos usuarios</h2>
+              <h2 className="text-4xl text-white font-sansation">
+                Últimos usuarios
+              </h2>
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
             <div className="w-full flex flex-row justify-center items-center my-5">
-              <UsersCarousel users={users} classroomCache={classroomCache} />
+              <UsersCarousel users={usersWithClassrooms} />
             </div>
           </div>
 
           <div className="w-full flex flex-col mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
             <div className="flex flex-col w-full justify-center items-center space-y-5">
-              <h2 className="text-4xl text-white font-sansation">Tabla de usuarios</h2>
+              <h2 className="text-4xl text-white font-sansation">
+                Tabla de usuarios
+              </h2>
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
             <div className="my-5">
               {isLoading ? (
-                <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+                <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                   <span>Cargando...</span>
                 </div>
               ) : (
@@ -105,7 +103,7 @@ export default function Users() {
                   url={"user"}
                   onDeleteItem={deleteUser}
                 />
-              )}{" "}
+              )}
             </div>
             <CreateNewButton url="create" />
           </div>

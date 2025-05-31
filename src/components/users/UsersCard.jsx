@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import placeholderUser from "../../assets/placeholder-images/profilepicture.png";
 
-export default function UsersCard({ user, classroomCache, isPlaceholder = false }) {
+export default function UsersCard({ user, isPlaceholder = false }) {
   const [isLoading, setIsLoading] = useState(true);
-  const classroom = classroomCache?.[user?.id];
 
-useEffect(() => {
-  if (classroom !== undefined || isPlaceholder) {
-    setIsLoading(false);
-  }
-}, [classroom, isPlaceholder]);
-
+  useEffect(() => {
+    if (user || isPlaceholder) {
+      setIsLoading(false);
+    }
+  }, [user, isPlaceholder]);
 
   if (isLoading) {
     return (
@@ -55,14 +53,23 @@ useEffect(() => {
           alt="user-img"
         />
         <div className="flex flex-col items-center space-y-2 justify-center py-2">
-          <h3 className="text-xl text-center font-sansation text-primary" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}>
+          <h3
+            className="text-xl text-center font-sansation text-primary"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
+          >
             {user.name} {user.surnames}
           </h3>
-          <h4 className="text-lg" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}>
-            {classroom?.name ?? "Sin clase asignada"}
+          <h4
+            className="text-lg"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
+          >
+            {user.classroom || "Sin clase asignada"}
           </h4>
-          <h4 className="text-lg first-letter:uppercase" style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}>
-            {user.role ?? "N/A"}
+          <h4
+            className="text-lg first-letter:uppercase"
+            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
+          >
+            {user.role || "N/A"}
           </h4>
         </div>
       </div>

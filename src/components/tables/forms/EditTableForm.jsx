@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateBoard } from "../../../utils/boards/boardsApi";
 import { fetchClassrooms } from "../../../utils/classrooms/classroomsApi";
-import tableImg from "../../../assets/page_images/table.png"; // Descomenta si tienes imagen
+import tableImg from "../../../assets/page_images/table.png";
 
 export default function EditTableForm({ board }) {
   const initialData = {
     classroom_id: board.classroom_id || "",
+    size: board.size || "",
   };
 
   const [formData, setFormData] = useState({ ...initialData });
@@ -53,7 +54,6 @@ export default function EditTableForm({ board }) {
     try {
       setIsLoading(true);
       setError(null);
-
       await updateBoard(board.id, payload);
       setSuccessMessage("¡Mesa actualizada con éxito!");
       setTimeout(() => navigate("/tables"), 1500);
@@ -71,7 +71,7 @@ export default function EditTableForm({ board }) {
       className="flex flex-col items-center justify-center font-rubik px-10 py-20"
     >
       <div className="flex items-center justify-center flex-col w-1/2 mb-10">
-         <img className="w-64 h-64" src={tableImg} alt="table" />
+        <img className="w-64 h-64" src={tableImg} alt="table" />
       </div>
 
       <div className="w-full max-w-xl space-y-10">
@@ -92,6 +92,22 @@ export default function EditTableForm({ board }) {
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label className="block text-2xl font-sansation text-details2">
+            Tamaño de la mesa (máx. 5):
+          </label>
+          <input
+            type="number"
+            name="size"
+            min="1"
+            max="5"
+            value={formData.size}
+            onChange={handleChange}
+            className="mt-2 block w-full rounded-lg bg-details text-xl text-white py-2 px-3 border-b-2 border-cuaternary"
+            placeholder="Introduce el tamaño de la mesa"
+          />
         </div>
 
         {error && <p className="text-red-500 text-center">{error}</p>}
