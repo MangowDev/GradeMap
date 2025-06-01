@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 
-export function DeleteModal({ isOpen, onClose, item, onSuccess, onConfirm }) {
+export function DeleteModal({
+  isOpen,
+  onClose,
+  item,
+  onSuccess,
+  onConfirm,
+  userRole,
+  url,
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  if (!isOpen) return null;
+  const noDeleteForProfUrls = ["users", "computers", "tables", "subjects"];
+  const canDelete = !(
+    userRole === "teacher" && noDeleteForProfUrls.includes(url)
+  );
+
+  // Evita que el modal siquiera se renderice si no tiene permisos
+  if (!isOpen || !canDelete) return null;
 
   const handleDelete = async () => {
     setLoading(true);

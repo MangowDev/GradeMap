@@ -36,6 +36,22 @@ export const getSubjectById = async (id) => {
   }
 };
 
+export const getSubjectUsersById = async (id) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}subjects/${id}/users`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch subject users");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error fetching subject users with ID ${id}:`, error);
+    throw error;
+  }
+};
+
 export const createSubject = async (subjectData) => {
   const token = localStorage.getItem("auth_token");
   try {

@@ -3,23 +3,25 @@ import { useParams } from "react-router-dom";
 import Navbar from "../../components/bars/Navbar/Navbar";
 import Footer from "../../components/bars/footer/Footer";
 import EditComputerForm from "../../components/computers/form/EditComputerForm";
-import { getComputerById } from "../../utils/computers/computersApi";
+import { getComputerDetails } from "../../utils/computers/computersApi";
+
 
 export default function EditComputer() {
   const [computer, setComputer] = useState(null);
   const { id } = useParams();
 
-  useEffect(() => {
-    const fetchComputer = async () => {
-      try {
-        const response = await getComputerById(id);
-        setComputer(response);
-      } catch (error) {
-        console.error("Error al obtener el ordenador:", error);
-      }
-    };
-    fetchComputer();
-  }, [id]);
+useEffect(() => {
+  const fetchComputer = async () => {
+    try {
+      const response = await getComputerDetails(id);
+      setComputer(response);
+    } catch (error) {
+      console.error("Error al obtener los detalles del ordenador:", error);
+    }
+  };
+  fetchComputer();
+}, [id]);
+
 
   if (!computer) {
     return (

@@ -7,13 +7,13 @@ import {
   fetchBoardsWithDetails,
   deleteBoard,
 } from "../utils/boards/boardsApi.js";
-import { header } from "framer-motion/client";
 
 export default function Tables() {
   const [boards, setBoards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const userRole = localStorage.getItem("user_role");
   useEffect(() => {
     const getBoards = async () => {
       try {
@@ -77,7 +77,8 @@ export default function Tables() {
           </div>
           <div className="my-5">
             {isLoading ? (
-              <div className="font-rubik text-white text-center text-2xl flex flex-row items-center justify-center">
+              <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
                 <span>Cargando...</span>
               </div>
             ) : (
@@ -86,6 +87,7 @@ export default function Tables() {
                 columns={columns}
                 url={"table"}
                 onDeleteItem={deleteBoard}
+                userRole={userRole}
               />
             )}
           </div>

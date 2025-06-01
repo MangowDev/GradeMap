@@ -1,61 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { fetchUsers } from "../../../utils/users/usersApi";
-import { fetchBoards } from "../../../utils/boards/boardsApi";
-import { getClassroomById } from "../../../utils/classrooms/classroomsApi";
+import React from "react";
 import computerImg from "../../../assets/page_images/computer.png";
 
 export default function ReadOnlyComputerForm({ computer }) {
-  const [users, setUsers] = useState([]);
-  const [boards, setBoards] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [usersData, boardsData] = await Promise.all([
-          fetchUsers(),
-          fetchBoards(),
-        ]);
-
-        const boardsWithClassroomNames = await Promise.all(
-          boardsData.map(async (board) => {
-            try {
-              const classroom = await getClassroomById(board.classroom_id);
-              return {
-                ...board,
-                classroom_name: classroom.name || "Sin aula",
-              };
-            } catch {
-              return {
-                ...board,
-                classroom_name: "Aula no encontrada",
-              };
-            }
-          })
-        );
-
-        setUsers(usersData || []);
-        setBoards(boardsWithClassroomNames);
-      } catch (error) {
-        console.error("Error cargando datos:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <p className="text-white">Cargando datos...</p>;
-  }
-
-  const assignedUser = users.find(
-    (user) => String(user.id) === String(computer.user_id)
-  );
-  const assignedBoard = boards.find(
-    (board) => String(board.id) === String(computer.board_id)
-  );
+  
+  const assignedUser = computer.user;
+  const assignedBoard = computer.board;
+  const classroomName = computer.board?.classroom?.name || "Sin aula";
 
   return (
     <div className="flex flex-col items-center justify-center font-rubik px-10 py-20 text-white">
@@ -81,7 +31,7 @@ export default function ReadOnlyComputerForm({ computer }) {
           </label>
           <p className="mt-2 block w-full rounded-lg bg-details text-white text-xl py-2 px-3 border-b-2 border-cuaternary">
             {assignedBoard
-              ? `Mesa ID: ${assignedBoard.id} - Aula: ${assignedBoard.classroom_name}`
+              ? `Mesa ID: ${assignedBoard.id} - Aula: ${classroomName}`
               : "No asignada"}
           </p>
         </div>

@@ -119,6 +119,28 @@ export const getGradeById = async (id) => {
   }
 };
 
+export const getGradeBySubjectId = async (id) => {
+  const token = localStorage.getItem("auth_token");
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}grades/subject/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al obtener la nota por asignatura");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error obteniendo la nota por asignatura con ID ${id}:`, error);
+    throw error;
+  }
+};
+
 export const deleteGrade = async (id) => {
   const token = localStorage.getItem("auth_token");
   try {

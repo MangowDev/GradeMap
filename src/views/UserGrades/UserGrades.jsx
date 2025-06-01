@@ -17,6 +17,7 @@ export default function UserGrades() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const userRole = localStorage.getItem("user_role");
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -89,6 +90,7 @@ export default function UserGrades() {
                 columns={columns}
                 url={"grade"}
                 onDeleteItem={deleteGrade}
+                userRole={userRole}
               />
             )}
           </div>

@@ -10,8 +10,8 @@ import computerImg from "../../../assets/page_images/computer.png";
 
 export default function EditComputerForm({ computer }) {
   const initialData = {
-    user_id: computer.user_id || "",
-    board_id: computer.board_id || "",
+    user_id: computer.user?.id || computer.user_id || "",
+    board_id: computer.board?.id || computer.board_id || "",
   };
 
   const [formData, setFormData] = useState({ ...initialData });
@@ -29,7 +29,7 @@ export default function EditComputerForm({ computer }) {
       try {
         const [usersData, boardsData, computersData] = await Promise.all([
           fetchUsers(),
-          fetchBoardsWithDetails(), // ✅ esta llamada ya incluye classroom
+          fetchBoardsWithDetails(),
           fetchComputersWithDetails(),
         ]);
 
@@ -66,8 +66,7 @@ export default function EditComputerForm({ computer }) {
 
     const userAlreadyAssigned = computers.some(
       (c) =>
-        String(c.user?.id) === String(formData.user_id) &&
-        c.id !== computer.id
+        String(c.user?.id) === String(formData.user_id) && c.id !== computer.id
     );
 
     if (userAlreadyAssigned) {
@@ -118,11 +117,7 @@ export default function EditComputerForm({ computer }) {
             {users.map((user) => {
               const isAssigned = assignedUserIds.includes(String(user.id));
               return (
-                <option
-                  key={user.id}
-                  value={user.id}
-                  disabled={isAssigned}
-                >
+                <option key={user.id} value={user.id} disabled={isAssigned}>
                   {user.name} {user.surnames} (ID: {user.id})
                   {isAssigned ? " - Ya asignado" : ""}
                 </option>
@@ -144,7 +139,8 @@ export default function EditComputerForm({ computer }) {
             <option value="">Selecciona una mesa</option>
             {boards.map((board) => (
               <option key={board.id} value={board.id}>
-                Mesa ID: {board.id} - Aula: {board.classroom?.name || "Sin aula"}
+                Mesa ID: {board.id} - Aula:{" "}
+                {board.classroom?.name || "Sin aula"}
               </option>
             ))}
           </select>

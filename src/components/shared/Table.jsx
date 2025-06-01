@@ -20,11 +20,17 @@ export default function Table({
   columns: columnsProp,
   onDeleteItem,
   url,
+  userRole,
 }) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
+  const noDeleteForProfUrls = ["user", "computer", "table", "subject"];
+
+  console.log(url);
+  
+  
   const columns = useMemo(
     () => [
       ...columnsProp,
@@ -47,17 +53,20 @@ export default function Table({
                 title="Editar"
               />
             </Link>
-            <FaTrash
-              className="cursor-pointer hover:text-red-500 transition"
-              size={21}
-              title="Eliminar"
-              onClick={() => openDeleteModal(row.original)}
-            />
+
+            {userRole === "teacher" && !noDeleteForProfUrls.includes(url) && (
+              <FaTrash
+                className="cursor-pointer hover:text-red-500 transition"
+                size={21}
+                title="Eliminar"
+                onClick={() => openDeleteModal(row.original)}
+              />
+            )}
           </div>
         ),
       },
     ],
-    [columnsProp]
+    [columnsProp, userRole, url]
   );
 
   const openDeleteModal = (item) => {

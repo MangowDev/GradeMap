@@ -5,13 +5,15 @@ import Table from "../components/shared/Table.jsx";
 import CreateNewButton from "../components/shared/CreateNewButton.jsx";
 import { fetchSubjects, deleteSubject } from "../utils/subjects/subjectsApi.js";
 import SubjectSelectCard from "../components/subjects/SubjectSelectCard.jsx";
-import { header } from "framer-motion/m";
 
 export default function Subjects() {
   const [subjects, setSubjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAllSubjects, setShowAllSubjects] = useState(false);
+
+  const userRole = localStorage.getItem("user_role");
+  const userId = parseInt(localStorage.getItem("user_id"), 10);
 
   useEffect(() => {
     const getSubjects = async () => {
@@ -21,7 +23,14 @@ export default function Subjects() {
 
         const data = await fetchSubjects();
 
-        const formatted = data.map((subject) => ({
+        let filteredSubjects = data;
+        if (userRole === "teacher" && userId) {
+          filteredSubjects = data.filter(
+            (subject) => subject.teacher_id === userId
+          );
+        }
+
+        const formatted = filteredSubjects.map((subject) => ({
           id: subject.id,
           name: subject.name,
           image: subject.image,
@@ -37,7 +46,7 @@ export default function Subjects() {
     };
 
     getSubjects();
-  }, []);
+  }, [userRole, userId]);
 
   const columns = [
     { header: "ID", accessorKey: "id" },
@@ -118,6 +127,7 @@ export default function Subjects() {
                   columns={columns}
                   url={"subjects"}
                   onDeleteItem={deleteSubject}
+                  userRole={userRole}
                 />
               )}
             </div>

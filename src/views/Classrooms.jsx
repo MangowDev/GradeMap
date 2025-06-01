@@ -14,6 +14,7 @@ export default function Classrooms() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const userRole = localStorage.getItem("user_role");
   useEffect(() => {
     const getClassrooms = async () => {
       try {
@@ -102,6 +103,7 @@ export default function Classrooms() {
                 columns={columns}
                 url={"classroom"}
                 onDeleteItem={deleteClassroom}
+                userRole={userRole}
               />
             )}
           </div>

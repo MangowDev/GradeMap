@@ -11,6 +11,7 @@ export default function Computers() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const userRole = localStorage.getItem("user_role");
   useEffect(() => {
     const getComputers = async () => {
       try {
@@ -21,7 +22,7 @@ export default function Computers() {
 
         const formatted = data.map((computer) => ({
           id: computer.id,
-          board: computer.board?.id || "Sin placa",
+          board: computer.board?.id || "Sin mesa",
           classroom: computer.board?.classroom?.name || "Sin clase",
           user: computer.user?.name || "Sin usuario",
         }));
@@ -79,6 +80,7 @@ export default function Computers() {
                 columns={columns}
                 url={"computer"}
                 onDeleteItem={deleteComputer}
+                userRole={userRole}
               />
             )}{" "}
           </div>

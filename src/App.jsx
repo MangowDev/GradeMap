@@ -1,9 +1,12 @@
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
+
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Home from "./views/Home";
@@ -35,8 +38,34 @@ import ClassroomDetails from "./views/Details/ClassroomDetails";
 import TableDetails from "./views/Details/TablesDetails";
 import SubjectDetails from "./views/Details/SubjectDetails";
 
+import { getUserById } from "./utils/users/usersApi"; 
+
 function App() {
   const token = localStorage.getItem("auth_token");
+  const userId = localStorage.getItem("user_id");
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (userId) {
+      getUserById(userId)
+        .then((user) => {
+          setUserRole(user.role);
+          localStorage.setItem("user_role", user.role);
+          setLoading(false);
+        })
+        .catch(() => {
+          setUserRole(null);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [userId]);
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <Router>
@@ -47,7 +76,7 @@ function App() {
         <Route
           path="/home"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Home />
             </PrivateRoute>
           }
@@ -56,7 +85,7 @@ function App() {
         <Route
           path="/users"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Users />
             </PrivateRoute>
           }
@@ -65,7 +94,7 @@ function App() {
         <Route
           path="/computers"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Computers />
             </PrivateRoute>
           }
@@ -74,7 +103,7 @@ function App() {
         <Route
           path="/tables"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Tables />
             </PrivateRoute>
           }
@@ -83,7 +112,7 @@ function App() {
         <Route
           path="/subjects"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Subjects />
             </PrivateRoute>
           }
@@ -92,7 +121,7 @@ function App() {
         <Route
           path="/grades"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Grades />
             </PrivateRoute>
           }
@@ -101,16 +130,17 @@ function App() {
         <Route
           path="/classrooms"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <Classrooms />
             </PrivateRoute>
           }
         />
 
+        {/* Crear */}
         <Route
           path="/users/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <CreateUser />
             </PrivateRoute>
           }
@@ -119,7 +149,7 @@ function App() {
         <Route
           path="/computers/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <CreateComputer />
             </PrivateRoute>
           }
@@ -128,7 +158,7 @@ function App() {
         <Route
           path="/tables/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <CreateTable />
             </PrivateRoute>
           }
@@ -137,7 +167,7 @@ function App() {
         <Route
           path="/subjects/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <CreateSubject />
             </PrivateRoute>
           }
@@ -146,7 +176,7 @@ function App() {
         <Route
           path="/grades/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <CreateGrade />
             </PrivateRoute>
           }
@@ -155,16 +185,17 @@ function App() {
         <Route
           path="/classrooms/create"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <CreateClassroom />
             </PrivateRoute>
           }
         />
 
+        {/* Editar */}
         <Route
           path="/user/edit/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <EditUser />
             </PrivateRoute>
           }
@@ -173,7 +204,7 @@ function App() {
         <Route
           path="/computer/edit/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <EditComputer />
             </PrivateRoute>
           }
@@ -182,7 +213,7 @@ function App() {
         <Route
           path="/table/edit/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <EditTable />
             </PrivateRoute>
           }
@@ -191,7 +222,7 @@ function App() {
         <Route
           path="/subjects/edit/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <EditSubject />
             </PrivateRoute>
           }
@@ -200,7 +231,7 @@ function App() {
         <Route
           path="/grade/edit/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <EditGrade />
             </PrivateRoute>
           }
@@ -209,16 +240,17 @@ function App() {
         <Route
           path="/classroom/edit/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <EditClassroom />
             </PrivateRoute>
           }
         />
 
+        {/* Detalles y otros */}
         <Route
           path="/user/grades/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <UserGrades />
             </PrivateRoute>
           }
@@ -227,7 +259,7 @@ function App() {
         <Route
           path="/subjects/list/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <SubjectList />
             </PrivateRoute>
           }
@@ -236,7 +268,7 @@ function App() {
         <Route
           path="/user/read/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <UserDetails />
             </PrivateRoute>
           }
@@ -245,7 +277,7 @@ function App() {
         <Route
           path="/computer/read/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <ComputerDetails />
             </PrivateRoute>
           }
@@ -254,7 +286,7 @@ function App() {
         <Route
           path="/grade/read/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <GradeDetails />
             </PrivateRoute>
           }
@@ -263,7 +295,7 @@ function App() {
         <Route
           path="/classroom/read/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <ClassroomDetails />
             </PrivateRoute>
           }
@@ -272,31 +304,25 @@ function App() {
         <Route
           path="/table/read/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <TableDetails />
             </PrivateRoute>
           }
         />
-        
+
         <Route
           path="/subjects/read/:id"
           element={
-            <PrivateRoute>
+            <PrivateRoute userRole={userRole}>
               <SubjectDetails />
             </PrivateRoute>
           }
         />
 
-        
-
         <Route
           path="/"
           element={
-            token ? (
-              <Navigate to="/home" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            token ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />
           }
         />
       </Routes>

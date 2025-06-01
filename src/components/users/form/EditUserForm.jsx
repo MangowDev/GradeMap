@@ -176,7 +176,7 @@ export default function EditUserForm({ user }) {
           to={`/user/grades/${user.id}`}
           className="mt-2 w-[80%] flex flex-row justify-center items-center"
         >
-          <button className="group w-[90%] text-2xl text-primary mt-6 p-3 px-4 rounded-lg bg-details hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
+          <button className="group w-[90%] text-2xl text-primary mt-6 p-2 px-4 rounded-lg bg-details hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
             Ver calificaciones
           </button>
         </Link>

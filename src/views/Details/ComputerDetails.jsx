@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import Navbar from "../../components/bars/Navbar/Navbar";
 import Footer from "../../components/bars/footer/Footer";
 import ReadOnlyComputerForm from "../../components/computers/form/ReadOnlyComputerForm";
-import { getComputerById } from "../../utils/computers/computersApi";
+import { getComputerDetails } from "../../utils/computers/computersApi";
+
 
 export default function ComputerDetails() {
   const [computer, setComputer] = useState(null);
@@ -12,7 +13,7 @@ export default function ComputerDetails() {
   useEffect(() => {
     const fetchComputer = async () => {
       try {
-        const response = await getComputerById(id);
+        const response = await getComputerDetails(id);
         setComputer(response);
       } catch (error) {
         console.error("Error al obtener el ordenador:", error);
