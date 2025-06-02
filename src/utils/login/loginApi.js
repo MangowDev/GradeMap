@@ -1,12 +1,15 @@
 export const registerUser = async (userData) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to register");
@@ -56,8 +59,8 @@ export const logoutUser = async (navigate) => {
   } catch (error) {
     console.error("Logout failed:", error);
   } finally {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("user_id");
+    localStorage.clear();
+    sessionStorage.clear();
     navigate("/login");
   }
 };

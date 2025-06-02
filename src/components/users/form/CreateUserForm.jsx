@@ -108,16 +108,6 @@ export default function CreateUserForm() {
           }}
         ></div>
 
-        <button className="group text-details2 mt-6 p-3 px-4 rounded-lg bg-details text-xl hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
-          <span
-            className="relative inline-block transition-colors duration-300 ease-in-out group-hover:text-details
-              after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[2px] after:bg-details
-              after:scale-x-0 after:origin-center after:transition-transform after:duration-300 group-hover:after:scale-x-100"
-          >
-            Cambiar imagen
-          </span>
-        </button>
-
         <div className="mt-6 w-[80%]">
           <label className="block text-xl sm:text-2xl font-medium font-sansation text-details2">
             Ordenador:

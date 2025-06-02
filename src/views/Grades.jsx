@@ -7,42 +7,51 @@ import {
   fetchGradesWithDetails,
   deleteGrade,
 } from "../utils/grades/gradesApi.js";
+import { fetchSubjects } from "../utils/subjects/subjectsApi.js";
 
 export default function Grades() {
   const [grades, setGrades] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [teacherSubjects, setTeacherSubjects] = useState([]);
 
   const userRole = localStorage.getItem("user_role");
+  const userId = Number(localStorage.getItem("user_id"));
 
   useEffect(() => {
-    const getGrades = async () => {
+    const loadData = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        const data = await fetchGradesWithDetails();
-
-        const formatted = data.map((grade) => ({
+        const gradesData = await fetchGradesWithDetails();
+        const formattedGrades = gradesData.map((grade) => ({
           id: grade.id,
           name: grade.name ?? "Sin nombre",
           grade: grade.grade ?? "Sin nota",
           type: grade.type ?? "Sin tipo",
           user: grade.user?.name ?? "Sin usuario",
           subject: grade.subject?.name ?? "Sin asignatura",
+          subjectId: grade.subject?.id ?? null,
         }));
+        setGrades(formattedGrades);
 
-        setGrades(formatted);
+        const allSubjects = await fetchSubjects();
+        const teacherSubjectIds = allSubjects
+          .filter((subject) => subject.teacher?.id === userId)
+          .map((subject) => subject.id);
+
+        setTeacherSubjects(teacherSubjectIds);
       } catch (err) {
         console.error("Error:", err);
-        setError("Error al cargar calificaciones.");
+        setError("Error al cargar calificaciones o asignaturas.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    getGrades();
-  }, []);
+    loadData();
+  }, [userId]);
 
   const columns = [
     { header: "ID", accessorKey: "id" },
@@ -88,6 +97,7 @@ export default function Grades() {
                 url={"grade"}
                 onDeleteItem={deleteGrade}
                 userRole={userRole}
+                teacherSubjects={teacherSubjects}
               />
             )}
           </div>

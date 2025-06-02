@@ -3,6 +3,8 @@ import { FaUserCircle } from "react-icons/fa";
 import LogoutButton from "./LogoutButton";
 import { FaGear, FaUser } from "react-icons/fa6";
 import { fetchUsername } from "../../../utils/nav/navApi";
+import { MdGrade } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function NavUser() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +12,10 @@ export default function NavUser() {
   const menuRef = useRef();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const userRole = localStorage.getItem("user_role");
+  
+  const userId = localStorage.getItem("user_id");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -49,14 +55,20 @@ export default function NavUser() {
       >
         <ul className="font-rubik text-lg text-white">
           <div className="flex flex-col space-y-3 mt-1">
-            <li className="flex flex-row items-center space-x-3 px-3 py-2 hover:bg-white/30 rounded-md cursor-pointer">
-              <FaUser size={22} />
-              <span>Perfil</span>
+            <li>
+              <Link to={`/user/edit/${userId}`} className="flex flex-row items-center space-x-3 px-3 py-2 hover:bg-white/30 rounded-md cursor-pointer">
+                <FaUser size={22} />
+                <span>Perfil</span>
+              </Link>
             </li>
-            <li className="flex flex-row items-center space-x-3 px-3 py-2 hover:bg-white/30 rounded-md cursor-pointer">
-              <FaGear size={22} />
-              <span>Configuración</span>
-            </li>
+            {userRole === "teacher" && (
+              <li>
+                <Link to={`/teacher/subjects/${userId}`} className="flex flex-row items-center space-x-2 px-3 py-2 hover:bg-white/30 rounded-md cursor-pointer">
+                  <MdGrade size={32} />
+                  <span>Calificaciones</span>
+                </Link>
+              </li>
+            )}
             <div className="w-full h-[2px] mt-1 bg-details"></div>
           </div>
           <li className="pt-10 pb-3 cursor-pointer">

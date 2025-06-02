@@ -34,13 +34,10 @@ export default function Users() {
     getUsersWithClassrooms();
   }, []);
 
-  // Ordena usuarios por fecha creación (created_at) descendente y toma los 10 más recientes
   const recentUsers = [...users]
     .sort((a, b) => new Date(b.user.created_at) - new Date(a.user.created_at))
     .slice(0, 10);
 
-  // Para la tabla y carousel, mostramos recentUsers pero adaptamos la estructura:
-  // classroom puede venir nulo, entonces ponemos "Sin clase asignada"
   const usersWithClassrooms = recentUsers.map(({ user, classroom }) => ({
     ...user,
     classroom: classroom ? classroom.name : "Sin clase asignada",

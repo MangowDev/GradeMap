@@ -132,9 +132,6 @@ export default function EditUserForm({ user }) {
             backgroundSize: "140%",
           }}
         ></div>
-        <button className="group text-details2 mt-6 p-3 px-4 rounded-lg bg-details text-xl hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
-          Cambiar imagen
-        </button>
 
         <div className="mt-6 w-[80%]">
           <label className="block text-xl sm:text-2xl font-medium font-sansation text-details2">
@@ -164,7 +161,7 @@ export default function EditUserForm({ user }) {
             <button
               type="button"
               onClick={() =>
-                setFormData((prev) => ({ ...prev, computer_id: "" }))
+                setFormData((prev) => ({ ...prev, computer_id: null }))
               }
               className="mt-2 text-md text-red-500 hover:underline hover:cursor-pointer"
             >

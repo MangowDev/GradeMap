@@ -34,6 +34,7 @@ export default function LoginForm() {
       const result = await loginUser(formData);
       console.log("Login successful:", result);
       localStorage.setItem("user_id", result.user.id);
+      localStorage.setItem("user_role", result.user.role);
       localStorage.setItem("auth_token", result.token);
       navigate('/home');
     } catch (err) {

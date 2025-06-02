@@ -1,7 +1,7 @@
 import React from "react";
 import placeholderUser from "../../assets/placeholder-images/profilepicture.png";
 
-export default function UserGradeInfo({ user, grades }) {
+export default function UserGradeInfo({ user, grades, subjects }) {
   const trabajos = grades.filter((g) => g.type.toLowerCase() === "trabajo");
   const examenes = grades.filter((g) => g.type.toLowerCase() === "examen");
 
@@ -16,9 +16,11 @@ export default function UserGradeInfo({ user, grades }) {
   const mediaExamenes = avg(examenes);
   const mediaGlobal = avg(grades);
 
-  const asignaturas = [
-    ...new Set(grades.map((g) => g.subject?.name || "Desconocida")),
-  ];
+  const asignaturas = subjects.length
+    ? subjects.map((s) => s.name)
+    : grades.length
+    ? [...new Set(grades.map((g) => g.subject?.name || "Desconocida"))]
+    : ["No hay asignaturas"];
 
   return (
     <div className="flex flex-row font-rubik items-center justify-center w-full px-10 py-8 rounded-lg border-details border-2 bg-cuaternary">
@@ -45,9 +47,7 @@ export default function UserGradeInfo({ user, grades }) {
               </span>
             </div>
             <div>
-              <span className="text-2xl font-rubik text-white">
-                DNI: {user.dni}
-              </span>
+              <span className="text-2xl font-rubik text-white">DNI: {user.dni}</span>
             </div>
           </div>
           <div className="flex flex-col w-full space-y-8">
@@ -56,7 +56,8 @@ export default function UserGradeInfo({ user, grades }) {
                 Asignaturas:{" [ "}
                 {asignaturas.length > 0
                   ? asignaturas.join(", ")
-                  : "No hay asignaturas"} {" ] "}
+                  : "No hay asignaturas"}{" "}
+                {" ] "}
               </span>
             </div>
             <div>

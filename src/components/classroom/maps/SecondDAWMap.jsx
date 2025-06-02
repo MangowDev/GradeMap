@@ -200,19 +200,19 @@ useEffect(() => {
                   <MapButton
                     text="Mesa 2"
                     top="top-88"
-                    left="left-105"
+                    left="left-108"
                     onClick={() => handleMapButtonClick(2)}
                   />
                   <MapButton
                     text="Mesa 3"
                     top="top-91"
-                    left="left-160"
+                    left="left-163"
                     onClick={() => handleMapButtonClick(3)}
                   />
                   <MapButton
                     text="Mesa 4"
                     top="top-95"
-                    left="left-225"
+                    left="left-228"
                     onClick={() => handleMapButtonClick(4)}
                   />
                 </div>
@@ -225,20 +225,20 @@ useEffect(() => {
                   />
                   <MapButton
                     text="Mesa 6"
-                    top="top-130"
-                    left="left-72"
+                    top="top-129"
+                    left="left-74"
                     onClick={() => handleMapButtonClick(6)}
                   />
                   <MapButton
                     text="Mesa 7"
                     top="top-130"
-                    left="left-129"
+                    left="left-131"
                     onClick={() => handleMapButtonClick(7)}
                   />
                   <MapButton
                     text="Mesa 8"
                     top="top-132"
-                    left="left-195"
+                    left="left-197"
                     onClick={() => handleMapButtonClick(8)}
                   />
                 </div>

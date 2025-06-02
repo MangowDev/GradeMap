@@ -3,11 +3,9 @@ import placeholderUser from "../../assets/placeholder-images/profilepicture.png"
 import { Link } from "react-router-dom";
 
 export default function SubjectUser({ user }) {
-  // Helpers para comprobar si hay valor válido
   const hasComputer = user.computer_id && user.computer_id !== "N/A";
   const hasClassroom = user.classroom?.name && user.classroom?.name !== "Sin asignar";
 
-  // Estilos para texto que no se puede hacer hover (blanco, sin cursor pointer)
   const disabledTextClass = "text-white cursor-default no-underline";
 
   return (

@@ -21,16 +21,17 @@ export default function Table({
   onDeleteItem,
   url,
   userRole,
+  teacherSubjects = [],
 }) {
   const [sorting, setSorting] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
+  console.log(teacherSubjects);
+  
+
   const noDeleteForProfUrls = ["user", "computer", "table", "subject"];
 
-  console.log(url);
-  
-  
   const columns = useMemo(
     () => [
       ...columnsProp,
@@ -54,7 +55,11 @@ export default function Table({
               />
             </Link>
 
-            {userRole === "teacher" && !noDeleteForProfUrls.includes(url) && (
+            {(userRole === "admin" ||
+              (userRole === "teacher" &&
+                !noDeleteForProfUrls.includes(url) &&
+                (url !== "grade" ||
+                  teacherSubjects.includes(row.original.subjectId)))) && (
               <FaTrash
                 className="cursor-pointer hover:text-red-500 transition"
                 size={21}

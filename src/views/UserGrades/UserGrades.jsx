@@ -7,6 +7,7 @@ import { getUserGrades, getUserById } from "../../utils/users/usersApi";
 import { deleteGrade } from "../../utils/grades/gradesApi";
 import Table from "../../components/shared/Table";
 import CreateNewButton from "../../components/shared/CreateNewButton";
+import { getSubjectsForUser } from "../../utils/user-subjects/userSubjectsApi";
 
 export default function UserGrades() {
   const { id } = useParams();
@@ -14,21 +15,25 @@ export default function UserGrades() {
 
   const [grades, setGrades] = useState([]);
   const [user, setUser] = useState(null);
+  const [subjects, setSubjects] = useState([]); 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const userRole = localStorage.getItem("user_role");
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const [gradesData, userData] = await Promise.all([
+        const [gradesData, userData, subjectsData] = await Promise.all([
           getUserGrades(id),
           getUserById(id),
+          getSubjectsForUser(id),
         ]);
         setGrades(gradesData);
         setUser(userData);
+        setSubjects(subjectsData || []);
       } catch (err) {
         setError("Error al obtener los datos del usuario.");
         console.error(err);
@@ -63,7 +68,7 @@ export default function UserGrades() {
         {error ? (
           <p className="text-red-500">{error}</p>
         ) : user && grades && !isLoading ? (
-          <UserGradeInfo user={user} grades={grades} />
+          <UserGradeInfo user={user} grades={grades} subjects={subjects} />
         ) : (
           <div className="font-rubik mt-6 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>

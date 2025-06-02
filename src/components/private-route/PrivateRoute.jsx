@@ -5,6 +5,8 @@ const PrivateRoute = ({ children, userRole }) => {
   const token = localStorage.getItem("auth_token");
   const location = useLocation();
 
+  const userId = localStorage.getItem("user_id");
+
   if (!token) {
     return <Navigate to="/login" replace />;
   }
@@ -21,6 +23,7 @@ const PrivateRoute = ({ children, userRole }) => {
       "/subjects",
       "/subjects/create",
       "/subject/edit",
+      `/user/edit/${userId}`,
     ];
     const isEditRoute = path.includes("/edit") || path.includes("/create");
     const allowedForProf = allowedEditPaths.some((allowedPath) =>

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-  useLocation,
 } from "react-router-dom";
 
 import Login from "./views/Login";
@@ -38,34 +36,11 @@ import ClassroomDetails from "./views/Details/ClassroomDetails";
 import TableDetails from "./views/Details/TablesDetails";
 import SubjectDetails from "./views/Details/SubjectDetails";
 
-import { getUserById } from "./utils/users/usersApi"; 
+import TeacherSubjects from "./views/TeacherSubjects/TeacherSubjects";
 
 function App() {
   const token = localStorage.getItem("auth_token");
-  const userId = localStorage.getItem("user_id");
-  const [userRole, setUserRole] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (userId) {
-      getUserById(userId)
-        .then((user) => {
-          setUserRole(user.role);
-          localStorage.setItem("user_role", user.role);
-          setLoading(false);
-        })
-        .catch(() => {
-          setUserRole(null);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
-  }, [userId]);
-
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
+  const userRole = localStorage.getItem("user_role");
 
   return (
     <Router>
@@ -320,9 +295,22 @@ function App() {
         />
 
         <Route
+          path="/teacher/subjects/:id"
+          element={
+            <PrivateRoute userRole={userRole}>
+              <TeacherSubjects />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
           path="/"
           element={
-            token ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />
+            token ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
       </Routes>
