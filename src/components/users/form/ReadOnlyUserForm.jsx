@@ -18,9 +18,14 @@ export default function ReadOnlyUserForm({ user }) {
           <label className="block text-xl sm:text-2xl font-medium font-sansation text-details2">
             Ordenador:
           </label>
-          <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-            {user.computer_id || "No asignado"}
-          </p>
+          <input
+            type="text"
+            disabled
+            value={
+              user.computer_id ? `Ordenador ${user.computer_id}` : "No asignado"
+            }
+            className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+          />
         </div>
 
         <Link
@@ -35,79 +40,109 @@ export default function ReadOnlyUserForm({ user }) {
 
       <div className="flex items-center justify-center flex-col w-2/3">
         <div className="w-[90%] max-w-full mx-auto px-4 space-y-6">
+          {/** Nombre y Apellidos */}
           <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-4 sm:space-y-0 w-full">
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Nombre:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                {user.name}
-              </p>
+              <input
+                type="text"
+                disabled
+                value={user.name}
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Apellidos:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                {user.surnames}
-              </p>
+              <input
+                type="text"
+                disabled
+                value={user.surnames}
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
           </div>
 
+          {/** Username y DNI */}
           <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-4 sm:space-y-0 w-full">
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Username:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                {user.username}
-              </p>
+              <input
+                type="text"
+                disabled
+                value={user.username}
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 DNI:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                {user.dni}
-              </p>
+              <input
+                type="text"
+                disabled
+                value={user.dni}
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
           </div>
 
+          {/** Email y Rol */}
           <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-4 sm:space-y-0 w-full">
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Email:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                {user.email}
-              </p>
+              <input
+                type="email"
+                disabled
+                value={user.email}
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Rol:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg capitalize">
-                {user.role}
-              </p>
+              <select
+                disabled
+                value={user.role}
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default capitalize"
+              >
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+              </select>
             </div>
           </div>
 
+          {/** Contraseña y Confirmar */}
           <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-4 sm:space-y-0 w-full">
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Contraseña:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                ••••••••
-              </p>
+              <input
+                type="password"
+                disabled
+                value="••••••••"
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
             <div className="w-full">
               <label className="block text-xl sm:text-2xl font-medium text-details2">
                 Confirmar contraseña:
               </label>
-              <p className="mt-2 text-white text-lg bg-details py-2 px-3 rounded-lg">
-                ••••••••
-              </p>
+              <input
+                type="password"
+                disabled
+                value="••••••••"
+                className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-none cursor-default"
+              />
             </div>
           </div>
         </div>

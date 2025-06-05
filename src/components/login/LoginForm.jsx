@@ -58,7 +58,7 @@ export default function LoginForm() {
           htmlFor="username"
           className="block text-xl sm:text-3xl font-medium font-sansation text-cuaternary"
         >
-          Username:
+          Nombre de usuario:
         </label>
         <input
           type="text"
@@ -67,7 +67,7 @@ export default function LoginForm() {
           value={formData.username}
           onChange={handleChange}
           className="mt-2 sm:mt-3 font-rubik block w-full text-lg sm:text-2xl py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-          placeholder="Your username..."
+          placeholder="Tu nombre de usuario..."
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function LoginForm() {
           htmlFor="password"
           className="block text-xl sm:text-3xl font-medium font-sansation text-cuaternary"
         >
-          Password:
+          Contraseña:
         </label>
         <input
           type="password"
@@ -85,7 +85,7 @@ export default function LoginForm() {
           value={formData.password}
           onChange={handleChange}
           className="mt-2 sm:mt-3 font-rubik text-lg sm:text-2xl block w-full py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-          placeholder="Your password..."
+          placeholder="Tu contraseña..."
         />
       </div>
 
@@ -101,14 +101,14 @@ export default function LoginForm() {
         {error && <p className="text-red-600 mt-5 font-rubik text-lg text-center">{error}</p>}
 
         <p className="mt-4 sm:mt-5 text-black text-base sm:text-xl font-rubik italic text-center">
-          Don't have an account?{" "}
+          ¿No tienes una cuenta?{" "}
           <Link
             className="relative inline-block text-secondary transition-colors duration-200 ease-in-out hover:text-cuaternary
             after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-secondary
             after:scale-x-0 after:origin-center after:transition-transform after:duration-300 hover:after:scale-x-100"
             to="/register"
           >
-            Register here
+            Registrate aqui
           </Link>
         </p>
       </div>

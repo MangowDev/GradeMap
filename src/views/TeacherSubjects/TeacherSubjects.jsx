@@ -20,7 +20,6 @@ export default function TeacherSubjects() {
 
         const data = await fetchSubjects();
 
-        // Solo las asignaturas del profesor actual
         const filtered = data.filter(
           (subject) => subject.teacher_id === userId
         );
@@ -59,7 +58,7 @@ export default function TeacherSubjects() {
         {isLoading ? (
           <div className="font-rubik mt-12 text-white text-center space-x-7 text-2xl flex flex-row items-center justify-center">
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white"></div>
-            <span>Cargando asignaturas...</span>
+            <span>Cargando...</span>
           </div>
         ) : (
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">

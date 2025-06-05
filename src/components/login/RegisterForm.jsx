@@ -62,7 +62,7 @@ export default function RegisterForm() {
             value={formData.name}
             onChange={handleChange}
             className="mt-2 sm:mt-3 font-rubik block w-full text-lg sm:text-2xl py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-            placeholder="Tony"
+            placeholder="Juan"
           />
         </div>
         <div className="w-full">
@@ -79,7 +79,7 @@ export default function RegisterForm() {
             value={formData.surnames}
             onChange={handleChange}
             className="mt-2 sm:mt-3 font-rubik block w-full text-lg sm:text-2xl py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-            placeholder="Stark"
+            placeholder="Gutierrez"
           />
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function RegisterForm() {
             htmlFor="username"
             className="block text-xl sm:text-3xl font-medium font-sansation text-cuaternary"
           >
-            Username:
+            Nombre de usuario:
           </label>
           <input
             type="text"
@@ -99,7 +99,7 @@ export default function RegisterForm() {
             value={formData.username}
             onChange={handleChange}
             className="mt-2 sm:mt-3 font-rubik block w-full text-lg sm:text-2xl py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-            placeholder="IronMan99"
+            placeholder="Spiderman_hola2"
           />
         </div>
         <div className="w-full">
@@ -127,7 +127,7 @@ export default function RegisterForm() {
             htmlFor="password"
             className="block text-xl sm:text-3xl font-medium font-sansation text-cuaternary"
           >
-            Password:
+            Contraseña:
           </label>
           <input
             type="password"
@@ -136,7 +136,7 @@ export default function RegisterForm() {
             value={formData.password}
             onChange={handleChange}
             className="mt-2 sm:mt-3 font-rubik text-lg sm:text-2xl block w-full py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-            placeholder="Your password..."
+            placeholder="Tu contraseña..."
           />
         </div>
 
@@ -145,7 +145,7 @@ export default function RegisterForm() {
             htmlFor="password_confirmation"
             className="block text-xl sm:text-3xl font-medium font-sansation text-cuaternary"
           >
-            Confirmation:
+            Confirmacion:
           </label>
           <input
             type="password"
@@ -154,7 +154,7 @@ export default function RegisterForm() {
             value={formData.password_confirmation}
             onChange={handleChange}
             className="mt-2 sm:mt-3 font-rubik text-lg sm:text-2xl block w-full py-2 px-2 border-b-2 text-black border-secondary focus:outline-none focus:ring-2 focus:ring-cuaternary hover:pl-3 sm:hover:pl-4 transition-all duration-200"
-            placeholder="Password Confirmation..."
+            placeholder="Confirmacion contraseña"
           />
         </div>
       </div>
@@ -182,7 +182,7 @@ export default function RegisterForm() {
           disabled={isSubmitting}
           className="w-full bg-secondary font-sansation font-semibold text-primary text-2xl sm:text-3xl py-2 rounded-md transition-colors duration-200 ease-in-out hover:bg-cuaternary hover:text-tertiary"
         >
-          {isSubmitting ? "Submitting..." : "Register"}
+          {isSubmitting ? "Registrando..." : "Registrar"}
         </button>
 
         {error && (
@@ -192,14 +192,14 @@ export default function RegisterForm() {
         )}
 
         <p className="mt-4 sm:mt-5 text-black text-base sm:text-xl font-rubik italic text-center">
-          Already registered?{" "}
+          ¿Ya tienes una cuenta?{" "}
           <Link
             className="relative inline-block text-secondary transition-colors duration-200 ease-in-out hover:text-cuaternary
             after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-secondary
             after:scale-x-0 after:origin-center after:transition-transform after:duration-300 hover:after:scale-x-100"
             to="/login"
           >
-            Sign in here
+            Entra aqui
           </Link>
         </p>
       </div>

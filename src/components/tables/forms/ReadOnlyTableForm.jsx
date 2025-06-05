@@ -42,6 +42,22 @@ export default function ReadOnlyTableForm({ board }) {
             className="mt-2 block w-full rounded-lg bg-details text-white text-xl py-2 px-3 border-b-2 border-cuaternary cursor-not-allowed"
           />
         </div>
+
+                <div>
+          <label className="block text-2xl font-sansation text-details2">
+            Tamaño de la mesa (máx. 5):
+          </label>
+          <input
+            type="number"
+            name="size"
+            min="1"
+            max="5"
+            value={board.size}
+            disabled
+            className="mt-2 block w-full rounded-lg bg-details text-xl text-white py-2 px-3 border-b-2 border-cuaternary"
+            placeholder="Introduce el tamaño de la mesa"
+          />
+        </div>
       </div>
     </div>
   );

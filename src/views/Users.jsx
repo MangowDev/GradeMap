@@ -14,6 +14,7 @@ export default function Users() {
   const [error, setError] = useState(null);
 
   const userRole = localStorage.getItem("user_role");
+
   useEffect(() => {
     const getUsersWithClassrooms = async () => {
       try {
@@ -34,11 +35,19 @@ export default function Users() {
     getUsersWithClassrooms();
   }, []);
 
+  // Todos los usuarios para la tabla
+  const usersForTable = users.map(({ user, classroom }) => ({
+    ...user,
+    classroom: classroom ? classroom.name : "Sin clase asignada",
+    computer_id: user.computer_id || "N/A",
+  }));
+
+  // Últimos 10 usuarios para el carousel
   const recentUsers = [...users]
     .sort((a, b) => new Date(b.user.created_at) - new Date(a.user.created_at))
     .slice(0, 10);
 
-  const usersWithClassrooms = recentUsers.map(({ user, classroom }) => ({
+  const usersForCarousel = recentUsers.map(({ user, classroom }) => ({
     ...user,
     classroom: classroom ? classroom.name : "Sin clase asignada",
     computer_id: user.computer_id || "N/A",
@@ -69,6 +78,7 @@ export default function Users() {
         )}
 
         <div className="flex flex-col space-y-5">
+          {/* Carrusel de usuarios recientes */}
           <div className="w-full flex flex-col mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
             <div className="flex flex-col w-full justify-center items-center space-y-5">
               <h2 className="text-4xl text-white font-sansation">
@@ -77,10 +87,11 @@ export default function Users() {
               <div className="w-full h-1.5 bg-tertiary border-1 rounded-lg border-primary"></div>
             </div>
             <div className="w-full flex flex-row justify-center items-center my-5">
-              <UsersCarousel users={usersWithClassrooms} />
+              <UsersCarousel users={usersForCarousel} />
             </div>
           </div>
 
+          {/* Tabla con todos los usuarios */}
           <div className="w-full flex flex-col mt-10 border-2 py-4 px-10 rounded-lg border-details bg-cuaternary">
             <div className="flex flex-col w-full justify-center items-center space-y-5">
               <h2 className="text-4xl text-white font-sansation">
@@ -96,7 +107,7 @@ export default function Users() {
                 </div>
               ) : (
                 <Table
-                  data={usersWithClassrooms}
+                  data={usersForTable}
                   columns={columns}
                   url={"user"}
                   onDeleteItem={deleteUser}

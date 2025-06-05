@@ -1,8 +1,9 @@
-export const getSubjectsForUser = async (userId) => {
-  const token = localStorage.getItem("auth_token");
+const token = localStorage.getItem("auth_token");
+
+export const getSubjectsForUser = async (user_id) => {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}user-subjects/user/${userId}`,
+      `${import.meta.env.VITE_BACKEND_URL}user-subjects/user/${user_id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -18,16 +19,15 @@ export const getSubjectsForUser = async (userId) => {
 
     return await response.json();
   } catch (error) {
-    console.error(`Error fetching subjects for user ${userId}:`, error);
+    console.error(`Error fetching subjects for user ${user_id}:`, error);
     return null;
   }
 };
 
-export const getUsersForSubject = async (subjectId) => {
-  const token = localStorage.getItem("auth_token");
+export const getUsersForSubject = async (subject_id) => {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}user-subjects/subject/${subjectId}`,
+      `${import.meta.env.VITE_BACKEND_URL}user-subjects/subject/${subject_id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -42,13 +42,12 @@ export const getUsersForSubject = async (subjectId) => {
 
     return await response.json();
   } catch (error) {
-    console.error(`Error fetching users for subject ${subjectId}:`, error);
+    console.error(`Error fetching users for subject ${subject_id}:`, error);
     throw error;
   }
 };
 
-export const attachSubjectToUser = async (userId, subjectId) => {
-  const token = localStorage.getItem("auth_token");
+export const attachSubjectToUser = async (user_id, subject_id) => {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}user-subjects/attach`,
@@ -58,7 +57,7 @@ export const attachSubjectToUser = async (userId, subjectId) => {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, subjectId }),
+        body: JSON.stringify({ user_id, subject_id }),
       }
     );
 
@@ -68,23 +67,25 @@ export const attachSubjectToUser = async (userId, subjectId) => {
 
     return await response.json();
   } catch (error) {
-    console.error(`Error attaching subject ${subjectId} to user ${userId}:`, error);
+    console.error(
+      `Error attaching subject ${subject_id} to user ${user_id}:`,
+      error
+    );
     throw error;
   }
 };
 
-export const detachSubjectFromUser = async (userId, subjectId) => {
-  const token = localStorage.getItem("auth_token");
+export const detachSubjectFromUser = async (user_id, subject_id) => {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}user-subjects/detach`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ userId, subjectId }),
+        body: JSON.stringify({ user_id, subject_id }),
       }
     );
 
@@ -94,23 +95,25 @@ export const detachSubjectFromUser = async (userId, subjectId) => {
 
     return await response.json();
   } catch (error) {
-    console.error(`Error detaching subject ${subjectId} from user ${userId}:`, error);
+    console.error(
+      `Error detaching subject ${subject_id} from user ${user_id}:`,
+      error
+    );
     throw error;
   }
 };
 
-export const syncSubjectsForUser = async (userId, subjectIds) => {
-  const token = localStorage.getItem("auth_token");
+export const syncSubjectsForUser = async (user_id, subject_ids) => {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}user-subjects/sync`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ userId, subjectIds }),
+        body: JSON.stringify({ user_id, subject_ids }),
       }
     );
 
@@ -120,7 +123,7 @@ export const syncSubjectsForUser = async (userId, subjectIds) => {
 
     return await response.json();
   } catch (error) {
-    console.error(`Error syncing subjects for user ${userId}:`, error);
+    console.error(`Error syncing subjects for user ${user_id}:`, error);
     throw error;
   }
 };

@@ -27,10 +27,7 @@ export default function Table({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-  console.log(teacherSubjects);
-  
-
-  const noDeleteForProfUrls = ["user", "computer", "table", "subject"];
+  const noDeleteForTeacherUrls = ["user", "computer", "table", "subject"];
 
   const columns = useMemo(
     () => [
@@ -47,17 +44,18 @@ export default function Table({
                 title="Ver"
               />
             </Link>
-            <Link to={`/${url}/edit/${row.original.id}`}>
-              <FaEdit
-                className="cursor-pointer hover:text-tertiary transition"
-                size={21}
-                title="Editar"
-              />
-            </Link>
-
+            {userRole !== "student" && (
+              <Link to={`/${url}/edit/${row.original.id}`}>
+                <FaEdit
+                  className="cursor-pointer hover:text-tertiary transition"
+                  size={21}
+                  title="Editar"
+                />
+              </Link>
+            )}
             {(userRole === "admin" ||
               (userRole === "teacher" &&
-                !noDeleteForProfUrls.includes(url) &&
+                !noDeleteForTeacherUrls.includes(url) &&
                 (url !== "grade" ||
                   teacherSubjects.includes(row.original.subjectId)))) && (
               <FaTrash

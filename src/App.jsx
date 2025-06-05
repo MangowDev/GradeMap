@@ -37,6 +37,7 @@ import TableDetails from "./views/Details/TablesDetails";
 import SubjectDetails from "./views/Details/SubjectDetails";
 
 import TeacherSubjects from "./views/TeacherSubjects/TeacherSubjects";
+import Unauthorized from "./views/Unauthorized";
 
 function App() {
   const token = localStorage.getItem("auth_token");
@@ -53,6 +54,15 @@ function App() {
           element={
             <PrivateRoute userRole={userRole}>
               <Home />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/unauthorized"
+          element={
+            <PrivateRoute userRole={userRole}>
+              <Unauthorized />
             </PrivateRoute>
           }
         />
