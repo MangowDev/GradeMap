@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import placeholderUser from "../../../assets/placeholder-images/profilepicture.png";
 import { updateUser } from "../../../utils/users/usersApi";
-import { syncSubjectsForUser, getSubjectsForUser } from "../../../utils/user-subjects/userSubjectsApi.js";
+import {
+  syncSubjectsForUser,
+  getSubjectsForUser,
+} from "../../../utils/user-subjects/userSubjectsApi.js";
 import { fetchSubjects } from "../../../utils/subjects/subjectsApi.js";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchComputersWithDetails } from "../../../utils/computers/computersApi";
@@ -41,11 +44,11 @@ export default function EditUserForm({ user }) {
       if (subjectsData) {
         setSubjects(subjectsData);
       }
-      
+
       // Cargar asignaturas del usuario
       const userSubjects = await getSubjectsForUser(user.id);
       if (userSubjects) {
-        setSelectedSubjects(userSubjects.map(sub => sub.id));
+        setSelectedSubjects(userSubjects.map((sub) => sub.id));
       }
       setIsSubjectsLoading(false);
 
@@ -173,7 +176,10 @@ export default function EditUserForm({ user }) {
         ></div>
 
         <div className="mt-6 w-[50%]">
-          <button className="group font-sansation rounded-xl font-bold p-2 mt-4 text-white w-full text-2xl bg-lightblue2 flex items-center justify-center gap-3 hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
+          <button
+            type="button"
+            className="group font-sansation rounded-xl font-bold p-2 mt-4 text-white w-full text-2xl bg-lightblue2 flex items-center justify-center gap-3 hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out"
+          >
             Cambiar imagen
           </button>
         </div>

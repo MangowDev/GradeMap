@@ -172,7 +172,10 @@ export default function CreateUserForm() {
           }}
         ></div>
         <div className="mt-6 w-[50%]">
-          <button className="group font-sansation rounded-xl font-bold p-2 mt-4 text-white w-full text-2xl bg-lightblue2 flex items-center justify-center gap-3 hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
+          <button
+            type="button"
+            className="group font-sansation rounded-xl font-bold p-2 mt-4 text-white w-full text-2xl bg-lightblue2 flex items-center justify-center gap-3 hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out"
+          >
             Cambiar imagen
           </button>
         </div>
