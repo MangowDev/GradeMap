@@ -329,6 +329,9 @@ export default function CreateUserForm() {
                 onChange={handleChange}
                 className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-cuaternary focus:ring-cuaternary hover:pl-3 transition-all duration-200"
               >
+                <option value="" disabled>
+                  Selecciona un rol
+                </option>
                 <option value="student">Student</option>
                 <option value="teacher">Teacher</option>
               </select>
