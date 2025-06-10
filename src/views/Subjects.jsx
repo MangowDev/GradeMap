@@ -34,6 +34,7 @@ export default function Subjects() {
           id: subject.id,
           name: subject.name,
           image: subject.image,
+          teacher: subject.teacher?.name ?? "Sin profesor",
         }));
 
         setSubjects(formatted);
@@ -52,6 +53,7 @@ export default function Subjects() {
     { header: "ID", accessorKey: "id" },
     { header: "Nombre", accessorKey: "name" },
     { header: "Imagen", accessorKey: "image" },
+    { header: "Profesor", accessorKey: "teacher" },
   ];
 
   return (

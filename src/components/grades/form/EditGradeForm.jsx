@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { updateGrade } from "../../../utils/grades/gradesApi";
 import { fetchUsers } from "../../../utils/users/usersApi";
-import { fetchSubjects } from "../../../utils/subjects/subjectsApi";
+import { getSubjectsForUser } from "../../../utils/user-subjects/userSubjectsApi";
 import gradeImg from "../../../assets/page_images/grade.png";
 import { useNavigate } from "react-router-dom";
 
@@ -26,19 +26,30 @@ export default function EditGradeForm({ gradeData }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersData, subjectsData] = await Promise.all([
-          fetchUsers(),
-          fetchSubjects(),
-        ]);
+        const usersData = await fetchUsers();
         setUsers(usersData || []);
-        setSubjects(subjectsData || []);
       } catch (err) {
-        console.error("Error al cargar usuarios o asignaturas:", err);
+        console.error("Error al cargar usuarios:", err);
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchSubjectsForUser = async () => {
+      if (formData.user_id) {
+        try {
+          const subjectsData = await getSubjectsForUser(formData.user_id);
+          setSubjects(subjectsData || []);
+        } catch (err) {
+          console.error("Error al cargar asignaturas del usuario:", err);
+        }
+      }
+    };
+
+    fetchSubjectsForUser();
+  }, [formData.user_id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -3,6 +3,7 @@ import placeholderUser from "../../../assets/placeholder-images/profilepicture.p
 import { createUser } from "../../../utils/users/usersApi.js";
 import { syncSubjectsForUser } from "../../../utils/user-subjects/userSubjectsApi.js";
 import { fetchSubjects } from "../../../utils/subjects/subjectsApi.js";
+import { fetchComputersWithDetails } from "../../../utils/computers/computersApi";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateUserForm() {
@@ -22,22 +23,33 @@ export default function CreateUserForm() {
   const [subjects, setSubjects] = useState([]);
   const [isSubjectsLoading, setIsSubjectsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [availableComputers, setAvailableComputers] = useState([]);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadSubjects = async () => {
+    const loadSubjectsAndComputers = async () => {
       setIsSubjectsLoading(true);
-      const data = await fetchSubjects();
-      if (data) {
-        setSubjects(data);
+
+      const subjectsData = await fetchSubjects();
+      if (subjectsData) {
+        setSubjects(subjectsData);
       }
+
+      const allComputers = await fetchComputersWithDetails();
+      if (allComputers) {
+        const unassigned = allComputers.filter(
+          (comp) => !comp.user || comp.user === null
+        );
+        setAvailableComputers(unassigned);
+      }
+
       setIsSubjectsLoading(false);
     };
 
-    loadSubjects();
+    loadSubjectsAndComputers();
   }, []);
 
   const handleChange = (e) => {
@@ -160,7 +172,7 @@ export default function CreateUserForm() {
           }}
         ></div>
         <div className="mt-6 w-[50%]">
-          <button className="group font-sansation rounded-xl font-bold rounded-md p-2 mt-4 text-white w-full text-2xl bg-lightblue2 flex items-center justify-center gap-3 hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
+          <button className="group font-sansation rounded-xl font-bold p-2 mt-4 text-white w-full text-2xl bg-lightblue2 flex items-center justify-center gap-3 hover:cursor-pointer hover:bg-details2 hover:text-details transition-colors duration-300 ease-in-out">
             Cambiar imagen
           </button>
         </div>
@@ -168,14 +180,36 @@ export default function CreateUserForm() {
           <label className="block text-xl sm:text-2xl font-medium font-sansation text-details2">
             Ordenador:
           </label>
-          <input
+          <select
             name="computer_id"
-            type="number"
-            value={formData.computer_id}
-            onChange={handleChange}
+            value={formData.computer_id === null ? "" : formData.computer_id}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData((prev) => ({
+                ...prev,
+                computer_id: value === "" ? "" : Number(value),
+              }));
+            }}
             className="mt-2 font-rubik block w-full rounded-lg bg-details text-lg sm:text-xl py-2 px-2 border-b-2 text-white border-cuaternary focus:outline-cuaternary focus:ring-cuaternary hover:pl-3 transition-all duration-200"
-            placeholder="Opcional"
-          />
+          >
+            <option value="">Sin ordenador</option>
+            {availableComputers.map((computer) => (
+              <option key={computer.id} value={computer.id}>
+                Ordenador {computer.id}
+              </option>
+            ))}
+          </select>
+          {formData.computer_id !== null && formData.computer_id !== "" && (
+            <button
+              type="button"
+              onClick={() =>
+                setFormData((prev) => ({ ...prev, computer_id: null }))
+              }
+              className="mt-2 text-md text-red-500 hover:underline hover:cursor-pointer"
+            >
+              Quitar ordenador
+            </button>
+          )}
         </div>
       </div>
 

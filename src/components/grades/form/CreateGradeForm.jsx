@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createGrade } from "../../../utils/grades/gradesApi.js";
 import { fetchUsers } from "../../../utils/users/usersApi.js";
-import { fetchSubjects } from "../../../utils/subjects/subjectsApi.js";
+import { getSubjectsForUser } from "../../../utils/user-subjects/userSubjectsApi.js";
 import gradeImg from "../../../assets/page_images/grade.png";
 
 export default function CreateGradeForm() {
@@ -28,14 +28,10 @@ export default function CreateGradeForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersData, subjectsData] = await Promise.all([
-          fetchUsers(),
-          fetchSubjects(),
-        ]);
+        const usersData = await fetchUsers();
         setUsers(usersData || []);
-        setSubjects(subjectsData || []);
       } catch (err) {
-        console.error("Error al cargar usuarios o asignaturas:", err);
+        console.error("Error al cargar usuarios:", err);
       }
     };
 
@@ -51,6 +47,21 @@ export default function CreateGradeForm() {
       }));
     }
   }, [location.state]);
+
+  useEffect(() => {
+    const fetchSubjectsForUser = async () => {
+      if (formData.user_id) {
+        try {
+          const subjectsData = await getSubjectsForUser(formData.user_id);
+          setSubjects(subjectsData || []);
+        } catch (err) {
+          console.error("Error al cargar asignaturas del usuario:", err);
+        }
+      }
+    };
+
+    fetchSubjectsForUser();
+  }, [formData.user_id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
